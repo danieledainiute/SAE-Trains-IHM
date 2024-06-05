@@ -8,6 +8,8 @@ import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -16,6 +18,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -34,6 +40,7 @@ public class VueDuJeu extends BorderPane {
     private Label nomJoueur;
     private Button passer;
     private HBox cartesEnMain;
+    private Map<String, Image> cartesImages;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -46,15 +53,21 @@ public class VueDuJeu extends BorderPane {
         passer = new Button("Passer");
         passer.setOnMouseClicked(event -> jeu.passerAEteChoisi());
         cartesEnMain = new HBox();
+        cartesImages = new HashMap<>();
 
-        BorderPane.setAlignment(plateau, Pos.CENTER);
+        initializeCardImages();
+
+        //BorderPane.setAlignment(plateau, Pos.CENTER);
         VBox bottom = new VBox();
         bottom.getChildren().addAll(instruction, cartesEnMain);
+        bottom.setAlignment(Pos.TOP_LEFT);
         VBox right = new VBox();
         right.getChildren().addAll(nomJoueur, passer);
+        right.setAlignment(Pos.CENTER);
 
         setCenter(plateau);
         setBottom(bottom);
+        //setBottom(plateau);
 
         setRight(right);
         //getChildren().addAll(plateau, instruction, nomJoueur, passer, cartesEnMain);
@@ -96,10 +109,43 @@ public class VueDuJeu extends BorderPane {
     private void updateCartesEnMain(ListeDeCartes main) {
         cartesEnMain.getChildren().clear();
         for (Carte c : main) {
-            Button carteButton = new Button(c.getNom());
-            carteButton.setOnAction(event -> jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
+            Button carteButton = createCarteButton(c);
+            //carteButton.setOnAction(event -> jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
             cartesEnMain.getChildren().add(carteButton);
         }
+    }
+
+    //train omnibus doesnt show
+    private Button createCarteButton(Carte c) {
+        Button carte = new Button();
+        carte.setOnAction(event -> jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
+
+        String imageFileName=convertCardNameToImageFileName(c.getNom());
+        //System.out.println(imageFileName + c.getNom());
+        Image card = cartesImages.get(imageFileName);
+        if (card != null) {
+            ImageView imageView = new ImageView(card);
+            imageView.setFitWidth(80);
+            imageView.setFitHeight(100);
+            carte.setGraphic(imageView);
+        } else carte.setText(c.getNom());
+        return carte;
+    }
+
+    private void initializeCardImages(){
+        for(Carte c: jeu.getReserve()){
+            String imageFileName = convertCardNameToImageFileName(c.getNom());
+            String path = "/images/cartes/"+imageFileName;
+            InputStream imageStream = getClass().getResourceAsStream(path);
+            if(imageStream!=null){
+                Image image = new Image(imageStream);
+                cartesImages.put(imageFileName, image);
+            }
+        }
+    }
+
+    private String convertCardNameToImageFileName(String card){
+        return card.toLowerCase().replace(" ", "_")+".jpg";
     }
 
     private Button trouverBoutonCarte(Carte carteATrouver) {
