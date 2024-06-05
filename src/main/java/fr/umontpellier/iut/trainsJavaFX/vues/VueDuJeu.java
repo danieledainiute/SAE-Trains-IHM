@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -16,7 +17,7 @@ import javafx.scene.control.Label;
  * (le joueur courant, ses cartes en main, son score, ...)
  * ainsi que les listeners à exécuter lorsque ces éléments changent
  */
-public class VueDuJeu extends Pane {
+public class VueDuJeu extends VBox {
 
     private final IJeu jeu;
     private VuePlateau plateau;

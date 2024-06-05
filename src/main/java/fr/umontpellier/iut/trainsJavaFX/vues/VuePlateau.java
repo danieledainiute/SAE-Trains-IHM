@@ -7,6 +7,7 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.Plateau;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.Tuile;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.TuileVille;
 import javafx.beans.binding.DoubleBinding;
+import javafx.collections.SetChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -165,6 +166,11 @@ public class VuePlateau extends Pane {
         // A compléter pour que la tuile change quand le nombre de rails du joueur change,
         // vous pouvez dans un premier temps faire en sorte qu'un changement du nombre de rails
         // provoque un appel à la fonction ajouteRailATuile
+        t.getRails().addListener((SetChangeListener<IJoueur>)change->{
+            if(t.hasRail(j)){
+                ajouteRailATuile(t, j, pionJoueur);
+            }
+        } );
     }
 
     private Circle creerPionJoueur(int numPion, double centerX, double centerY) {
@@ -202,9 +208,13 @@ public class VuePlateau extends Pane {
 
     private void ajouteRailATuile(Tuile t, Joueur j, Circle c) {
         System.out.println("Un rail a été posé par le joueur " + j.getNom());
+
     }
 
     private void choixTuile(MouseEvent event) {
-        System.out.println("Une tuile a été choisie");
+        //System.out.println("Une tuile a été choisie");
+        Group source = (Group) event.getSource();
+        String tuile = source.getId();
+        GestionJeu.getJeu().uneTuileAEteChoisie(tuile);
     }
 }
