@@ -57,7 +57,7 @@ public class TrainsIHM extends Application {
         GestionJeu.setJeu(jeu);
         VueDuJeu vueDuJeu = new VueDuJeu(jeu);
 
-        Scene scene = new Scene(vueDuJeu, 400, Screen.getPrimary().getBounds().getHeight() * DonneesGraphiques.pourcentageEcran);vueDuJeu.creerBindings();
+        Scene scene = new Scene(vueDuJeu, 500, Screen.getPrimary().getBounds().getHeight() * DonneesGraphiques.pourcentageEcran);vueDuJeu.creerBindings();
         jeu.run(); // le jeu doit être démarré après que les bindings ont été mis en place
 
 //        VueResultats vueResultats = new VueResultats(this);
