@@ -4,9 +4,11 @@ import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
+import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -115,12 +117,15 @@ public class VueDuJeu extends BorderPane {
         }
     }
 
-    //train omnibus doesnt show
+    //fix what the buttons do when pressed
     private Button createCarteButton(Carte c) {
         Button carte = new Button();
-        carte.setOnAction(event -> jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
+        carte.setOnAction(event -> {
+            jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
+            cartesEnMain.getChildren().remove(carte); // Remove the button when it is clicked
+        });
 
-        String imageFileName=convertCardNameToImageFileName(c.getNom());
+        String imageFileName = convertCardNameToImageFileName(c.getNom());
         //System.out.println(imageFileName + c.getNom());
         Image card = cartesImages.get(imageFileName);
         if (card != null) {
@@ -129,27 +134,39 @@ public class VueDuJeu extends BorderPane {
             imageView.setFitHeight(100);
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
+        //carte.setId(c.getNom());
         return carte;
     }
 
-    private void initializeCardImages(){
-        for(Carte c: jeu.getReserve()){
-            String imageFileName = convertCardNameToImageFileName(c.getNom());
-            String path = "/images/cartes/"+imageFileName;
-            InputStream imageStream = getClass().getResourceAsStream(path);
-            if(imageStream!=null){
-                Image image = new Image(imageStream);
-                cartesImages.put(imageFileName, image);
-            }
+    private void initializeCardImages() {
+        String imageFileName;
+        String path;
+        InputStream imageStream;
+        for (Carte c : jeu.getReserve()) {
+            createImage(c);
+        }
+        Carte omni = new TrainOmnibus();
+        createImage(omni);
+
+    }
+
+    private void createImage(Carte c) {
+        //Image image = null;
+        String imageFileName = convertCardNameToImageFileName(c.getNom());
+        String path = "/images/cartes/" + imageFileName;
+        InputStream imageStream = getClass().getResourceAsStream(path);
+        if (imageStream != null) {
+            Image image = new Image(imageStream);
+            cartesImages.put(imageFileName, image);
         }
     }
 
-    private String convertCardNameToImageFileName(String card){
-        return card.toLowerCase().replace(" ", "_")+".jpg";
+    private String convertCardNameToImageFileName(String card) {
+        return card.toLowerCase().replace(" ", "_") + ".jpg";
     }
 
     private Button trouverBoutonCarte(Carte carteATrouver) {
-        for (javafx.scene.Node node : cartesEnMain.getChildren()) {
+        for (Node node : cartesEnMain.getChildren()) {
             if (node instanceof Button && ((Button) node).getText().equals(carteATrouver.getNom())) {
                 return (Button) node;
             }
