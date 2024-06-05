@@ -44,7 +44,7 @@ public class VuePlateau extends Pane {
 
     private Scale scaleTuile;
 
-    public VuePlateau () {
+    public VuePlateau() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/plateau.fxml"));
             loader.setRoot(this);
@@ -52,7 +52,8 @@ public class VuePlateau extends Pane {
             loader.load();
         } catch (IOException e) {
             e.printStackTrace();
-        }        scaleTuile = new Scale();
+        }
+        scaleTuile = new Scale();
         tuiles.getTransforms().add(scaleTuile);
     }
 
@@ -81,8 +82,9 @@ public class VuePlateau extends Pane {
         mapVille.fitHeightProperty().bind(((Region) getParent()).heightProperty());
         mapVille.layoutXProperty().bind(new DoubleBinding() { // Pour maintenir le plateau au centre
             {
-                super.bind(widthProperty(),heightProperty());
+                super.bind(widthProperty(), heightProperty());
             }
+
             @Override
             protected double computeValue() {
                 double imageViewWidth = mapVille.getLayoutBounds().getWidth();
@@ -90,7 +92,10 @@ public class VuePlateau extends Pane {
             }
         });
         tuiles.translateXProperty().bind(new DoubleBinding() {
-            {super.bind(mapVille.boundsInParentProperty());}
+            {
+                super.bind(mapVille.boundsInParentProperty());
+            }
+
             @Override
             protected double computeValue() {
                 return mapVille.getBoundsInParent().getMinX();
@@ -147,7 +152,7 @@ public class VuePlateau extends Pane {
     }
 
     private void creerGares(double x, double y, Group tuilePlateau, TuileVille tuileJeu) {
-        Rectangle gare = new Rectangle(x + 2 + plateau.getDepX() * .5,y + 1.8 * plateau.getDepY(), plateau.getDepX(), plateau.getDepY()*.7);
+        Rectangle gare = new Rectangle(x + 2 + plateau.getDepX() * .5, y + 1.8 * plateau.getDepY(), plateau.getDepX(), plateau.getDepY() * .7);
         gare.setFill(Color.TRANSPARENT);
         tuilePlateau.getChildren().addAll(gare);
         ajouteGare(tuileJeu, gare);
@@ -166,11 +171,11 @@ public class VuePlateau extends Pane {
         // A compléter pour que la tuile change quand le nombre de rails du joueur change,
         // vous pouvez dans un premier temps faire en sorte qu'un changement du nombre de rails
         // provoque un appel à la fonction ajouteRailATuile
-        t.getRails().addListener((SetChangeListener<IJoueur>)change->{
-            if(t.hasRail(j)){
+        t.getRails().addListener((SetChangeListener<IJoueur>) change -> {
+            if (t.hasRail(j)) {
                 ajouteRailATuile(t, j, pionJoueur);
             }
-        } );
+        });
     }
 
     private Circle creerPionJoueur(int numPion, double centerX, double centerY) {
@@ -207,8 +212,10 @@ public class VuePlateau extends Pane {
     }
 
     private void ajouteRailATuile(Tuile t, Joueur j, Circle c) {
-        System.out.println("Un rail a été posé par le joueur " + j.getNom());
-
+        //System.out.println("Un rail a été posé par le joueur " + j.getNom());
+        String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(j.getCouleur());
+        Color couleur = Color.web(couleurHex);
+        c.setFill(couleur);
     }
 
     private void choixTuile(MouseEvent event) {
