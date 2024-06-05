@@ -6,8 +6,10 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
@@ -24,7 +26,7 @@ import javafx.scene.text.FontWeight;
  * (le joueur courant, ses cartes en main, son score, ...)
  * ainsi que les listeners à exécuter lorsque ces éléments changent
  */
-public class VueDuJeu extends VBox {
+public class VueDuJeu extends BorderPane {
 
     private final IJeu jeu;
     private VuePlateau plateau;
@@ -39,12 +41,23 @@ public class VueDuJeu extends VBox {
         plateau = new VuePlateau();
         instruction = new Label();
         //Font font = new Font("Times New Roman", 30);
-        instruction.setFont(Font.font("Times New Roman", FontWeight.BOLD, 30));
+        instruction.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
         nomJoueur = new Label();
         passer = new Button("Passer");
         passer.setOnMouseClicked(event -> jeu.passerAEteChoisi());
         cartesEnMain = new HBox();
-        getChildren().addAll(plateau, instruction, nomJoueur, passer, cartesEnMain);
+
+        BorderPane.setAlignment(plateau, Pos.CENTER);
+        VBox bottom = new VBox();
+        bottom.getChildren().addAll(instruction, cartesEnMain);
+        VBox right = new VBox();
+        right.getChildren().addAll(nomJoueur, passer);
+
+        setCenter(plateau);
+        setBottom(bottom);
+
+        setRight(right);
+        //getChildren().addAll(plateau, instruction, nomJoueur, passer, cartesEnMain);
     }
 
     public void creerBindings() {
@@ -71,6 +84,7 @@ public class VueDuJeu extends VBox {
 
         jeu.joueurCourantProperty().addListener((observable, oldValue, newValue) -> {
             nomJoueur.setText("Joueur : " + newValue.getNom());
+            updateCartesEnMain(newValue.mainProperty());
         });
         plateau.creerBindings();
     }
