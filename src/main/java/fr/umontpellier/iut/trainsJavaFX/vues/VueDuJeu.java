@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,7 +64,7 @@ public class VueDuJeu extends BorderPane {
         cartesImages = new HashMap<>();
         score = new Label("0");
         argent = new Label("0");
-        cartesEnReserve=new HBox();
+        cartesEnReserve = new HBox();
         initializeCardImages();
 
         createCartesEnReserve();
@@ -75,8 +76,12 @@ public class VueDuJeu extends BorderPane {
         right.getChildren().addAll(passer, score, argent);
         right.setAlignment(Pos.CENTER);
 
+        ScrollPane top = new ScrollPane(cartesEnReserve);
+
+
         setCenter(plateau);
         setBottom(bottom);
+        setTop(top);
         //setBottom(plateau);
 
         setRight(right);
@@ -121,7 +126,7 @@ public class VueDuJeu extends BorderPane {
         score.textProperty().bind(joueur.scoreProperty().asString());
     }
 
-    private void bindArgent(IJoueur joueur){
+    private void bindArgent(IJoueur joueur) {
         argent.textProperty().bind(joueur.argentProperty().asString());
     }
 
@@ -146,26 +151,24 @@ public class VueDuJeu extends BorderPane {
             cartesEnMain.getChildren().remove(carte); // Remove the button when it is clicked
         });
 
-        String imageFileName = convertCardNameToImageFileName(c.getNom());
-        //System.out.println(imageFileName + c.getNom());
-        Image card = cartesImages.get(imageFileName);
-        if (card != null) {
-            ImageView imageView = new ImageView(card);
-            imageView.setFitWidth(80);
-            imageView.setFitHeight(100);
-            carte.setGraphic(imageView);
-        } else carte.setText(c.getNom());
+        createButton(c, carte);
         //carte.setId(c.getNom());
         return carte;
     }
+
     //fix and understand if there have to be cartes de reserve or cartes en jeu on the top
     private Button createCarteButtonFromReserve(Carte c) {
         Button carte = new Button();
         carte.setOnAction(event -> {
-            //jeu.joueurCourantProperty().get().acheterCarte(c.getNom());
-            // You might want to update the display to remove the bought card from the reserve
+            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
+            cartesEnReserve.getChildren().remove(carte);
         });
 
+        createButton(c, carte);
+        return carte;
+    }
+
+    private void createButton(Carte c, Button carte) {
         String imageFileName = convertCardNameToImageFileName(c.getNom());
         Image card = cartesImages.get(imageFileName);
         if (card != null) {
@@ -174,7 +177,6 @@ public class VueDuJeu extends BorderPane {
             imageView.setFitHeight(100);
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
-        return carte;
     }
 
 
