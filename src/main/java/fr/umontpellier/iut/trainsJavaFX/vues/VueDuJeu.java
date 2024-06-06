@@ -45,9 +45,10 @@ public class VueDuJeu extends BorderPane {
     private Button passer;
     private HBox cartesEnMain;
     private Map<String, Image> cartesImages;
-    private Label score;
-    private Label argent;
+    //private Label score;
+    //private Label argent;
     private HBox cartesEnReserve;
+    private VueJoueurCourant vueJoueurCourant;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -61,8 +62,8 @@ public class VueDuJeu extends BorderPane {
         passer.setOnMouseClicked(event -> jeu.passerAEteChoisi());
         cartesEnMain = new HBox();
         cartesImages = new HashMap<>();
-        score = new Label("0");
-        argent = new Label("0");
+        //score = new Label("0");
+        //argent = new Label("0");
         cartesEnReserve = new HBox();
         initializeCardImages();
 
@@ -72,7 +73,9 @@ public class VueDuJeu extends BorderPane {
         VBox bottom = new VBox();
         HBox bottomContent = new HBox();
         VBox leftColumn = new VBox();
+
         AnchorPane rightColumn = loadVueJoueurCourant();
+
         leftColumn.getChildren().addAll(nomJoueur, cartesEnMain);
         bottomContent.getChildren().addAll(leftColumn, rightColumn);
         bottom.getChildren().addAll(instruction, bottomContent);
@@ -80,7 +83,7 @@ public class VueDuJeu extends BorderPane {
         bottom.setAlignment(Pos.TOP_LEFT);
 
         VBox right = new VBox();
-        right.getChildren().addAll(passer, score, argent);
+        right.getChildren().addAll(passer);
         right.setAlignment(Pos.CENTER);
 
         ScrollPane top = new ScrollPane(cartesEnReserve);
@@ -96,9 +99,12 @@ public class VueDuJeu extends BorderPane {
     }
 
     private AnchorPane loadVueJoueurCourant() {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/joueurCourant.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/joueurCourant.fxml"));
         try {
-            return loader.load();
+            AnchorPane joueurCourantPane = loader.load();
+            vueJoueurCourant = loader.getController();
+            vueJoueurCourant.setJoueur(jeu.joueurCourantProperty().get());
+            return joueurCourantPane;
         } catch (IOException e) {
             e.printStackTrace();
             return new AnchorPane();
@@ -130,22 +136,23 @@ public class VueDuJeu extends BorderPane {
         jeu.joueurCourantProperty().addListener((observable, oldValue, newValue) -> {
             nomJoueur.setText("Joueur : " + newValue.getNom());
             updateCartesEnMain(newValue.mainProperty());
-            bindScore(newValue);
-            bindArgent(newValue);
+            /*bindScore(newValue);
+            bindArgent(newValue);*/
+            vueJoueurCourant.setJoueur(newValue);
         });
 
-        bindArgent(jeu.joueurCourantProperty().get());
-        bindScore(jeu.joueurCourantProperty().get());
+        /*bindArgent(jeu.joueurCourantProperty().get());
+        bindScore(jeu.joueurCourantProperty().get());*/
         plateau.creerBindings();
     }
 
-    private void bindScore(IJoueur joueur) {
+   /* private void bindScore(IJoueur joueur) {
         score.textProperty().bind(joueur.scoreProperty().asString());
     }
 
     private void bindArgent(IJoueur joueur) {
         argent.textProperty().bind(joueur.argentProperty().asString());
-    }
+    }*/
 
     public IJeu getJeu() {
         return jeu;

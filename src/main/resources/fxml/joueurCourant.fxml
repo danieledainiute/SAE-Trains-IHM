@@ -8,44 +8,44 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="187.0" prefWidth="232.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
+<AnchorPane prefHeight="141.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
    <children>
-      <StackPane fx:id="money" prefHeight="100.0" prefWidth="130.0">
+      <StackPane fx:id="moneyStack" prefHeight="80.0" prefWidth="100.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/coins.png" />
                </image>
             </ImageView>
-            <Label text="0">
+            <Label fx:id="moneyL" text="0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="score" layoutX="130.0" prefHeight="100.0" prefWidth="130.0">
+      <StackPane fx:id="scoreStack" layoutX="100.0" prefHeight="80.0" prefWidth="100.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/score.png" />
                </image>
             </ImageView>
-            <Label prefHeight="14.0" prefWidth="8.0" text="0" textFill="#e4c515">
+            <Label fx:id="scoreL" prefHeight="14.0" prefWidth="8.0" text="0" textFill="#e4c515">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="railNb" layoutY="89.0" prefHeight="100.0" prefWidth="130.0">
+      <StackPane fx:id="railStack" layoutY="80.0" prefHeight="80.0" prefWidth="100.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/rails.png" />
                </image>
             </ImageView>
-            <Label text="0" textFill="#e4c515">
+            <Label fx:id="railNbL" text="0" textFill="#e4c515">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
