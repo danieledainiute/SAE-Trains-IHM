@@ -46,6 +46,7 @@ public class VueDuJeu extends BorderPane {
     private Label score;
     private Label argent;
     private HBox cartesEnReserve;
+    private VBox joueursVBox;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -78,10 +79,38 @@ public class VueDuJeu extends BorderPane {
 
         plateau.prefWidthProperty().bind(centerPane.widthProperty().multiply(0.5));
 
+        joueursVBox = new VBox();
+        joueursVBox.setSpacing(10);
+        updateJoueursVBox();
+        Label titleLabel = new Label("Joueurs dans jeu");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        VBox rightContainer = new VBox();
+        rightContainer.getChildren().addAll(titleLabel, joueursVBox, right);
+        rightContainer.setAlignment(Pos.CENTER_RIGHT);
+        rightContainer.setSpacing(20);
+
+
         setCenter(centerPane);
         setBottom(bottom);
         setTop(top);
-        setRight(right);
+        setRight(rightContainer);
+    }
+
+    private void updateJoueursVBox() {
+        joueursVBox.getChildren().clear();
+        for (IJoueur joueur : jeu.getJoueurs()) {
+            Label nomJoueurLabel = new Label(joueur.getNom());
+            Label scoreLabel = new Label();
+            Label argentLabel = new Label();
+
+            scoreLabel.textProperty().bind(joueur.scoreProperty().asString());
+            argentLabel.textProperty().bind(joueur.argentProperty().asString());
+
+            HBox joueurHBox = new HBox(10, nomJoueurLabel, scoreLabel, argentLabel);
+            joueurHBox.setAlignment(Pos.CENTER_LEFT);
+            joueursVBox.getChildren().add(joueurHBox);
+        }
     }
 
     public void creerBindings() {
