@@ -172,9 +172,8 @@ public class VuePlateau extends Pane {
         // vous pouvez dans un premier temps faire en sorte qu'un changement du nombre de rails
         // provoque un appel à la fonction ajouteRailATuile
         t.getRails().addListener((SetChangeListener<IJoueur>) change -> {
-            if (t.hasRail(j)) {
+            if (t.hasRail(j))
                 ajouteRailATuile(t, j, pionJoueur);
-            }
         });
     }
 
