@@ -16,11 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -55,7 +52,6 @@ public class VueDuJeu extends BorderPane {
         this.jeu = jeu;
         plateau = new VuePlateau();
         instruction = new Label();
-        //Font font = new Font("Times New Roman", 30);
         instruction.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
         nomJoueur = new Label();
         passer = new Button("Passer");
@@ -68,7 +64,6 @@ public class VueDuJeu extends BorderPane {
         initializeCardImages();
 
         createCartesEnReserve();
-        //BorderPane.setAlignment(plateau, Pos.CENTER);
         VBox bottom = new VBox();
         bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
         bottom.setAlignment(Pos.TOP_LEFT);
@@ -78,14 +73,15 @@ public class VueDuJeu extends BorderPane {
 
         ScrollPane top = new ScrollPane(cartesEnReserve);
 
+        StackPane centerPane = new StackPane(plateau);
+        centerPane.setAlignment(Pos.CENTER);
 
-        setCenter(plateau);
+        plateau.prefWidthProperty().bind(centerPane.widthProperty().multiply(0.5));
+
+        setCenter(centerPane);
         setBottom(bottom);
         setTop(top);
-        //setBottom(plateau);
-
         setRight(right);
-        //getChildren().addAll(plateau, instruction, nomJoueur, passer, cartesEnMain);
     }
 
     public void creerBindings() {
