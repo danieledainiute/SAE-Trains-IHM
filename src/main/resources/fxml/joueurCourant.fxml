@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import fr.umontpellier.iut.trainsJavaFX.vues.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
+   <children>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="14.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/boutons/coins.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="14.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/boutons/rails.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="58.0" layoutY="43.0" text="0">
+         <font>
+            <Font name="System Bold" size="54.0" />
+         </font>
+      </Label>
+      <Label layoutX="58.0" layoutY="260.0" text="0" textFill="#e4c515">
+         <font>
+            <Font name="System Bold" size="54.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="427.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/boutons/score.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="475.0" layoutY="52.0" text="0" textFill="#e4c515">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>
