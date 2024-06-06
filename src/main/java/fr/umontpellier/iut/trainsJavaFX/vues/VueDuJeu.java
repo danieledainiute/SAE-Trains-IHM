@@ -7,6 +7,7 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -46,6 +47,7 @@ public class VueDuJeu extends BorderPane {
     private Map<String, Image> cartesImages;
     private Label score;
     private Label argent;
+    private HBox cartesEnReserve;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -61,8 +63,10 @@ public class VueDuJeu extends BorderPane {
         cartesImages = new HashMap<>();
         score = new Label("0");
         argent = new Label("0");
+        cartesEnReserve=new HBox();
         initializeCardImages();
 
+        createCartesEnReserve();
         //BorderPane.setAlignment(plateau, Pos.CENTER);
         VBox bottom = new VBox();
         bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
@@ -154,6 +158,25 @@ public class VueDuJeu extends BorderPane {
         //carte.setId(c.getNom());
         return carte;
     }
+    //fix and understand if there have to be cartes de reserve or cartes en jeu on the top
+    private Button createCarteButtonFromReserve(Carte c) {
+        Button carte = new Button();
+        carte.setOnAction(event -> {
+            //jeu.joueurCourantProperty().get().acheterCarte(c.getNom());
+            // You might want to update the display to remove the bought card from the reserve
+        });
+
+        String imageFileName = convertCardNameToImageFileName(c.getNom());
+        Image card = cartesImages.get(imageFileName);
+        if (card != null) {
+            ImageView imageView = new ImageView(card);
+            imageView.setFitWidth(80);
+            imageView.setFitHeight(100);
+            carte.setGraphic(imageView);
+        } else carte.setText(c.getNom());
+        return carte;
+    }
+
 
     private void initializeCardImages() {
         String imageFileName;
@@ -180,6 +203,13 @@ public class VueDuJeu extends BorderPane {
 
     private String convertCardNameToImageFileName(String card) {
         return card.toLowerCase().replace(" ", "_") + ".jpg";
+    }
+
+    private void createCartesEnReserve() {
+        for (Carte c : jeu.getReserve()) {
+            Button carteButton = createCarteButtonFromReserve(c);
+            cartesEnReserve.getChildren().add(carteButton);
+        }
     }
 
     private Button trouverBoutonCarte(Carte carteATrouver) {
