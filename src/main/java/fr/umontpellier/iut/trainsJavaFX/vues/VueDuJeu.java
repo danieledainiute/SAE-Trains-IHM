@@ -213,6 +213,7 @@ public class VueDuJeu extends BorderPane {
             updateCartesEnMain(newValue.mainProperty());
             bindScore(newValue);
             bindArgent(newValue);
+            vueJoueurCourant.setJoueur(newValue);
         });
 
         bindArgent(jeu.joueurCourantProperty().get());
