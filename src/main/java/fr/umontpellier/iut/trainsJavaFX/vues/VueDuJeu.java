@@ -77,7 +77,7 @@ public class VueDuJeu extends BorderPane {
         right.setAlignment(Pos.CENTER);
 
         ScrollPane top = new ScrollPane(cartesEnReserve);
-
+        top.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         setCenter(plateau);
         setBottom(bottom);
@@ -161,7 +161,7 @@ public class VueDuJeu extends BorderPane {
         Button carte = new Button();
         carte.setOnAction(event -> {
             jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
-            cartesEnReserve.getChildren().remove(carte);
+            //cartesEnReserve.getChildren().remove(carte);
         });
 
         createButton(c, carte);
