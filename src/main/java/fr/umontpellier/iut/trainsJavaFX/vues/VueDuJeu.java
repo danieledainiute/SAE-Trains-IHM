@@ -8,6 +8,7 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -16,14 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,10 +67,18 @@ public class VueDuJeu extends BorderPane {
         initializeCardImages();
 
         createCartesEnReserve();
+
         //BorderPane.setAlignment(plateau, Pos.CENTER);
         VBox bottom = new VBox();
-        bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
+        HBox bottomContent = new HBox();
+        VBox leftColumn = new VBox();
+        AnchorPane rightColumn = loadVueJoueurCourant();
+        leftColumn.getChildren().addAll(nomJoueur, cartesEnMain);
+        bottomContent.getChildren().addAll(leftColumn, rightColumn);
+        bottom.getChildren().addAll(instruction, bottomContent);
+        //bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
         bottom.setAlignment(Pos.TOP_LEFT);
+
         VBox right = new VBox();
         right.getChildren().addAll(passer, score, argent);
         right.setAlignment(Pos.CENTER);
@@ -86,6 +93,16 @@ public class VueDuJeu extends BorderPane {
 
         setRight(right);
         //getChildren().addAll(plateau, instruction, nomJoueur, passer, cartesEnMain);
+    }
+
+    private AnchorPane loadVueJoueurCourant() {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/joueurCourant.fxml"));
+        try {
+            return loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new AnchorPane();
+        }
     }
 
     public void creerBindings() {

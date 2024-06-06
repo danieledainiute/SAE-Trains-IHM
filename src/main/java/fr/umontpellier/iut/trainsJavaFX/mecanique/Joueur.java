@@ -349,7 +349,7 @@ public class Joueur implements IJoueur {
 
     /**
      * @return le score total du joueur (score courant + points des cartes + points
-     *         des villes et lieux éloignés)
+     * des villes et lieux éloignés)
      */
     public int getScoreTotal() {
         int scoreTotal = score.getValue();

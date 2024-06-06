@@ -4,40 +4,53 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
+<AnchorPane prefHeight="187.0" prefWidth="232.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
    <children>
-      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="14.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/boutons/coins.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="14.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/boutons/rails.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="58.0" layoutY="43.0" text="0">
-         <font>
-            <Font name="System Bold" size="54.0" />
-         </font>
-      </Label>
-      <Label layoutX="58.0" layoutY="260.0" text="0" textFill="#e4c515">
-         <font>
-            <Font name="System Bold" size="54.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="427.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/boutons/score.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="475.0" layoutY="52.0" text="0" textFill="#e4c515">
-         <font>
-            <Font name="System Bold" size="42.0" />
-         </font>
-      </Label>
+      <StackPane fx:id="money" prefHeight="100.0" prefWidth="130.0">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/coins.png" />
+               </image>
+            </ImageView>
+            <Label text="0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane fx:id="score" layoutX="130.0" prefHeight="100.0" prefWidth="130.0">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/score.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="14.0" prefWidth="8.0" text="0" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane fx:id="railNb" layoutY="89.0" prefHeight="100.0" prefWidth="130.0">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/rails.png" />
+               </image>
+            </ImageView>
+            <Label text="0" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
