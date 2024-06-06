@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -43,6 +44,8 @@ public class VueDuJeu extends BorderPane {
     private Button passer;
     private HBox cartesEnMain;
     private Map<String, Image> cartesImages;
+    private Label score;
+    private Label argent;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -56,15 +59,16 @@ public class VueDuJeu extends BorderPane {
         passer.setOnMouseClicked(event -> jeu.passerAEteChoisi());
         cartesEnMain = new HBox();
         cartesImages = new HashMap<>();
-
+        score = new Label("0");
+        argent = new Label("0");
         initializeCardImages();
 
         //BorderPane.setAlignment(plateau, Pos.CENTER);
         VBox bottom = new VBox();
-        bottom.getChildren().addAll(instruction, cartesEnMain);
+        bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
         bottom.setAlignment(Pos.TOP_LEFT);
         VBox right = new VBox();
-        right.getChildren().addAll(nomJoueur, passer);
+        right.getChildren().addAll(passer, score, argent);
         right.setAlignment(Pos.CENTER);
 
         setCenter(plateau);
@@ -100,8 +104,21 @@ public class VueDuJeu extends BorderPane {
         jeu.joueurCourantProperty().addListener((observable, oldValue, newValue) -> {
             nomJoueur.setText("Joueur : " + newValue.getNom());
             updateCartesEnMain(newValue.mainProperty());
+            bindScore(newValue);
+            bindArgent(newValue);
         });
+
+        bindArgent(jeu.joueurCourantProperty().get());
+        bindScore(jeu.joueurCourantProperty().get());
         plateau.creerBindings();
+    }
+
+    private void bindScore(IJoueur joueur) {
+        score.textProperty().bind(joueur.scoreProperty().asString());
+    }
+
+    private void bindArgent(IJoueur joueur){
+        argent.textProperty().bind(joueur.argentProperty().asString());
     }
 
     public IJeu getJeu() {
