@@ -129,7 +129,6 @@ public class VueDuJeu extends BorderPane {
         for (IJoueur joueur : jeu.getJoueurs()) {
             Label nomJoueurLabel = new Label(joueur.getNom());
             String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
-            Color couleur = Color.web(couleurHex);
             nomJoueurLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
 
             //score
