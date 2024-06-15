@@ -43,7 +43,6 @@ public class VueDuJeu extends BorderPane {
     private final IJeu jeu;
     private VuePlateau plateau;
     private Label instruction;
-    private Label nomJoueur;
     private Button passer;
     private HBox cartesEnMain;
     private Map<String, Image> cartesImages;
@@ -59,7 +58,6 @@ public class VueDuJeu extends BorderPane {
         plateau = new VuePlateau();
         instruction = new Label();
         instruction.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
-        nomJoueur = new Label();
         passer = new Button("Passer");
         passer.setOnMouseClicked(event -> jeu.passerAEteChoisi());
         cartesEnMain = new HBox();
@@ -78,7 +76,7 @@ public class VueDuJeu extends BorderPane {
 
         leftColumn.getChildren().addAll(cartesEnMain);
         HBox hboxBottom = new HBox();
-        hboxBottom.getChildren().addAll(nomJoueur, instruction);
+        hboxBottom.getChildren().addAll(instruction);
         hboxBottom.setAlignment(Pos.CENTER);
         hboxBottom.setStyle("-fx-background-color: lightblue;");
 
@@ -215,7 +213,6 @@ public class VueDuJeu extends BorderPane {
         updateCartesEnMain(jeu.joueurCourantProperty().get().mainProperty());
 
         jeu.joueurCourantProperty().addListener((observable, oldValue, newValue) -> {
-            nomJoueur.setText("Joueur : " + newValue.getNom());
             updateCartesEnMain(newValue.mainProperty());
             bindScore(newValue);
             bindArgent(newValue);

@@ -62,6 +62,7 @@ public class VueJoueurCourant extends AnchorPane {
         scoreL.textProperty().bind(joueur.scoreProperty().asString());
         railNbL.textProperty().bind(joueur.nbJetonsRailsProperty().asString());
         joueurEnJeu.textProperty().bind(new SimpleStringProperty(joueur.getNom()+" en jeu"));
+        rail.textProperty().bind(joueur.pointsRailsProperty().asString());
     }
 
 }
