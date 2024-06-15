@@ -63,6 +63,8 @@ public class VueJoueurCourant extends AnchorPane {
         railNbL.textProperty().bind(joueur.nbJetonsRailsProperty().asString());
         joueurEnJeu.textProperty().bind(new SimpleStringProperty(joueur.getNom()+" en jeu"));
         rail.textProperty().bind(joueur.pointsRailsProperty().asString());
+        deck.textProperty().bind(joueur.mainProperty().sizeProperty().asString());
+        deffause.textProperty().bind(joueur.defausseProperty().sizeProperty().asString());
     }
 
 }
