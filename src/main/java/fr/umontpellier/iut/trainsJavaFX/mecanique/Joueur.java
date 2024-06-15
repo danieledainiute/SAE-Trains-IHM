@@ -57,7 +57,6 @@ public class Joueur implements IJoueur {
         pioche.add(jeu.prendreDansLaReserve("Gare"));
         pioche.melanger();
         piocherEnMain(5);
-//        testCasPrecis(1);
     }
 
     public Jeu getJeu() {
@@ -350,7 +349,7 @@ public class Joueur implements IJoueur {
 
     /**
      * @return le score total du joueur (score courant + points des cartes + points
-     *         des villes et lieux éloignés)
+     * des villes et lieux éloignés)
      */
     public int getScoreTotal() {
         int scoreTotal = score.getValue();
@@ -561,7 +560,4 @@ public class Joueur implements IJoueur {
 /*        // test fin du jeu
         nbJetonsRails.setValue(2);*/
     }
-
-
 }
-
