@@ -4,6 +4,7 @@ import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.Joueur;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +27,14 @@ public class VueJoueurCourant extends AnchorPane {
     private Label scoreL;
     @FXML
     private Label railNbL;
+    @FXML
+    private Label rail;
+    @FXML
+    private Label deffause;
+    @FXML
+    private Label deck;
+    @FXML
+    private Label joueurEnJeu;
 
     private IJoueur joueur;
 
@@ -52,6 +61,7 @@ public class VueJoueurCourant extends AnchorPane {
         moneyL.textProperty().bind(joueur.argentProperty().asString());
         scoreL.textProperty().bind(joueur.scoreProperty().asString());
         railNbL.textProperty().bind(joueur.nbJetonsRailsProperty().asString());
+        joueurEnJeu.textProperty().bind(new SimpleStringProperty(joueur.getNom()+" en jeu"));
     }
 
 }

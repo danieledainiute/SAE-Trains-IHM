@@ -51,7 +51,7 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="personalRailStack" layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -65,7 +65,7 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane layoutX="392.0" layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="deffauseStacl" layoutX="392.0" layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
          <children>
             <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -79,7 +79,7 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane layoutX="392.0" layoutY="48.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="deckStack" layoutX="392.0" layoutY="48.0" prefHeight="80.0" prefWidth="100.0">
          <children>
             <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -93,12 +93,12 @@
             </Label>
          </children>
       </StackPane>
-      <Label layoutX="14.0" layoutY="15.0" text="En jeu">
+      <Label fx:id="joueurEnJeu" layoutX="14.0" layoutY="15.0" text="En jeu">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="362.0" layoutY="120.0" text="Recues">
+      <Label fx:id="recues" layoutX="362.0" layoutY="120.0" text="Recues">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
