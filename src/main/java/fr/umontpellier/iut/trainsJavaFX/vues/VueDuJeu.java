@@ -243,7 +243,6 @@ public class VueDuJeu extends BorderPane {
         cartesEnMain.getChildren().clear();
         for (Carte c : main) {
             Button carteButton = createCarteButton(c);
-            //carteButton.setOnAction(event -> jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
             cartesEnMain.getChildren().add(carteButton);
         }
     }
@@ -257,7 +256,6 @@ public class VueDuJeu extends BorderPane {
         });
 
         createButton(c, carte);
-        //carte.setId(c.getNom());
         return carte;
     }
 

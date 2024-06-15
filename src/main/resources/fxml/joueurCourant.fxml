@@ -7,10 +7,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="141.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
+<AnchorPane prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
    <children>
-      <StackPane fx:id="moneyStack" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="moneyStack" layoutY="48.0" prefHeight="80.0" prefWidth="100.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -24,7 +23,7 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="scoreStack" layoutX="100.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="scoreStack" layoutX="442.0" layoutY="6.0" prefHeight="45.0" prefWidth="55.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -38,7 +37,7 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="railStack" layoutY="80.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="railStack" layoutX="392.0" layoutY="6.0" prefHeight="45.0" prefWidth="55.0">
          <children>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -52,5 +51,57 @@
             </Label>
          </children>
       </StackPane>
+      <StackPane layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/rail.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="rail" text="0" textFill="#ffe137">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane layoutX="392.0" layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/defausse.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="deffause" text="0" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane layoutX="392.0" layoutY="48.0" prefHeight="80.0" prefWidth="100.0">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/deck.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="deck" text="0" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <Label layoutX="14.0" layoutY="15.0" text="En jeu">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="362.0" layoutY="120.0" text="Recues">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
