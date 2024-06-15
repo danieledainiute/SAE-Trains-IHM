@@ -256,7 +256,7 @@ public class VueDuJeu extends BorderPane {
         return carte;
     }
 
-    //fix and understand if there have to be cartes de reserve or cartes en jeu on the top
+    //fix
     private Button createCarteButtonFromReserve(Carte c) {
         Button carte = new Button();
         carte.setOnAction(event -> {
@@ -273,8 +273,8 @@ public class VueDuJeu extends BorderPane {
         Image card = cartesImages.get(imageFileName);
         if (card != null) {
             ImageView imageView = new ImageView(card);
-            imageView.setFitWidth(80);
-            imageView.setFitHeight(100);
+            imageView.setFitWidth(120);
+            imageView.setFitHeight(160);
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
     }

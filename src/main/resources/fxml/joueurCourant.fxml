@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
+<AnchorPane prefHeight="100.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueJoueurCourant">
    <children>
-      <StackPane fx:id="moneyStack" layoutY="48.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="moneyStack" layoutY="48.0" prefHeight="40.0" prefWidth="50.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/coins.png" />
                </image>
@@ -23,9 +23,9 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="scoreStack" layoutX="442.0" layoutY="6.0" prefHeight="45.0" prefWidth="55.0">
+      <StackPane fx:id="scoreStack" layoutX="442.0" layoutY="6.0" prefHeight="20.0" prefWidth="55.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/score.png" />
                </image>
@@ -37,9 +37,9 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="railStack" layoutX="392.0" layoutY="6.0" prefHeight="45.0" prefWidth="55.0">
+      <StackPane fx:id="railStack" layoutX="390.0" layoutY="6.0" prefHeight="20.0" prefWidth="55.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/rails.png" />
                </image>
@@ -51,9 +51,9 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="personalRailStack" layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="personalRailStack" layoutY="98.0" prefHeight="40.0" prefWidth="50.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/rail.png" />
                </image>
@@ -65,9 +65,9 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="deffauseStacl" layoutX="392.0" layoutY="120.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="deffauseStacl" layoutX="417.0" layoutY="109.0" prefHeight="40.0" prefWidth="50.0">
          <children>
-            <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/defausse.png" />
                </image>
@@ -79,9 +79,9 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="deckStack" layoutX="392.0" layoutY="48.0" prefHeight="80.0" prefWidth="100.0">
+      <StackPane fx:id="deckStack" layoutX="420.0" layoutY="60.0" prefHeight="40.0" prefWidth="50.0">
          <children>
-            <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/boutons/deck.png" />
                </image>
@@ -98,7 +98,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="recues" layoutX="362.0" layoutY="120.0" text="Recues">
+      <Label fx:id="recues" layoutX="370.0" layoutY="101.0" text="Recues">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
