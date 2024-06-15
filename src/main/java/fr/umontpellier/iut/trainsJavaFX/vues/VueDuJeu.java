@@ -5,6 +5,8 @@ import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -256,12 +258,18 @@ public class VueDuJeu extends BorderPane {
         return carte;
     }
 
-    //fix
-    private Button createCarteButtonFromReserve(Carte c) {
+    //fix and understand if there have to be cartes de reserve or cartes en jeu on the top
+    private Button createCarteButtonFromReserve(Carte c, IntegerProperty nbCarteReserve) {
         Button carte = new Button();
         carte.setOnAction(event -> {
             jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
-            cartesEnReserve.getChildren().remove(carte);
+            int currentNbCarte = nbCarteReserve.get();
+            if (currentNbCarte > 0) {
+                nbCarteReserve.set(currentNbCarte - 1);
+                if (nbCarteReserve.get() == 0) {
+                    cartesEnReserve.getChildren().remove(carte.getParent());
+                }
+            }
         });
 
         createButton(c, carte);
@@ -309,8 +317,16 @@ public class VueDuJeu extends BorderPane {
 
     private void createCartesEnReserve() {
         for (Carte c : jeu.getReserve()) {
-            Button carteButton = createCarteButtonFromReserve(c);
-            cartesEnReserve.getChildren().add(carteButton);
+            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(10);
+            Button carteButton = createCarteButtonFromReserve(c, nbCarteReserve);
+
+            Label nbCarte = new Label();
+            nbCarte.textProperty().bind(nbCarteReserve.asString());
+
+            StackPane carte = new StackPane(carteButton, nbCarte);
+            StackPane.setAlignment(nbCarte, Pos.BOTTOM_CENTER);
+
+            cartesEnReserve.getChildren().add(carte);
         }
     }
 
