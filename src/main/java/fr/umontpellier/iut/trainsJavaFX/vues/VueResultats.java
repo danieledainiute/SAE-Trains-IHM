@@ -28,7 +28,7 @@ public class VueResultats extends BorderPane {
     public void afficherResultats() {
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(20));
+        layout.setPadding(new Insets(30));
         layout.setBorder(new Border(new BorderStroke(Color.DARKRED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
         layout.setStyle("-fx-stroke: darkred; -fx-stroke-width: 6; -fx-background-radius: 7; -fx-background-color: #F5F5DC;");
         layout.setStyle("-fx-background-color: #F5F5DC;");
