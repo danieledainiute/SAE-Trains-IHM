@@ -32,6 +32,9 @@ public class VueResultats extends BorderPane {
         layout.setBorder(new Border(new BorderStroke(Color.DARKRED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
         layout.setStyle("-fx-stroke: darkred; -fx-stroke-width: 6; -fx-background-radius: 7; -fx-background-color: #F5F5DC;");
         layout.setStyle("-fx-background-color: #F5F5DC;");
+        Label resultat = new Label("Résultats");
+        resultat.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        layout.getChildren().add(resultat);
 
         ihm.getJeu().getJoueurs().forEach(joueur -> {
             String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
@@ -60,7 +63,7 @@ public class VueResultats extends BorderPane {
 
         Button closeButton = new Button("Fermer");
         closeButton.setOnAction(event ->
-                ihm.getPrimaryStage().close() );
+                ihm.getPrimaryStage().close());
 
         Button restartButton = new Button("Rejouer");
         restartButton.setOnAction(event -> ihm.demarrerPartie());
@@ -73,7 +76,7 @@ public class VueResultats extends BorderPane {
 
         setCenter(layout);
 
-        scene = new Scene(this, 300, 200);
+        scene = new Scene(this, 300, 400);
 
         double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
         double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
