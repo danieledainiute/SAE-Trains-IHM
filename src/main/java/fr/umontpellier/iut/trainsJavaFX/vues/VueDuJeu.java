@@ -105,7 +105,7 @@ public class VueDuJeu extends BorderPane {
         hboxBottom.setStyle("-fx-background-color: lightblue;");
 
         HBox bottomContent = new HBox();
-        bottomContent.getChildren().addAll(leftColumn, rightColumn);
+        bottomContent.getChildren().addAll(leftColumn, rightColumn, carteRecues);
         HBox.setHgrow(leftColumn, Priority.ALWAYS);
         HBox.setHgrow(bottomRight, Priority.ALWAYS);
         bottomContent.setAlignment(Pos.CENTER);
