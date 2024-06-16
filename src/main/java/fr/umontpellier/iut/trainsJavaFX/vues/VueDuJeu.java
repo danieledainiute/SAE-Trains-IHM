@@ -78,7 +78,7 @@ public class VueDuJeu extends BorderPane {
         //bottom
         AnchorPane rightColumn = loadVueJoueurCourant();
         HBox bottomRight = new HBox();
-        bottomRight.getChildren().addAll(rightColumn, carteRecues);
+        bottomRight.getChildren().addAll(rightColumn);
 
         VBox leftColumn = new VBox();
         leftColumn.getChildren().addAll(cartesEnMain);
