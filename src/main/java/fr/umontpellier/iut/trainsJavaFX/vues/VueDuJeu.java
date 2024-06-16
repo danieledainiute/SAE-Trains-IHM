@@ -53,6 +53,7 @@ public class VueDuJeu extends BorderPane {
     private HBox cartesEnReserve;
     private VBox joueursVBox;
     private VueJoueurCourant vueJoueurCourant;
+    private HBox carteRecues;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -63,6 +64,7 @@ public class VueDuJeu extends BorderPane {
         passer = new Button("Passer");
         passer.setOnMouseClicked(event -> jeu.passerAEteChoisi());
         cartesEnMain = new HBox();
+        carteRecues = new HBox();
         cartesImages = new HashMap<>();
         score = new Label("0");
         argent = new Label("0");
@@ -75,6 +77,8 @@ public class VueDuJeu extends BorderPane {
         VBox leftColumn = new VBox();
 
         AnchorPane rightColumn = loadVueJoueurCourant();
+        HBox bottomRight = new HBox();
+        bottomRight.getChildren().addAll(rightColumn, carteRecues);
 
         leftColumn.getChildren().addAll(cartesEnMain);
         HBox hboxBottom = new HBox();
@@ -82,7 +86,7 @@ public class VueDuJeu extends BorderPane {
         hboxBottom.setAlignment(Pos.CENTER);
         hboxBottom.setStyle("-fx-background-color: lightblue;");
 
-        bottomContent.getChildren().addAll(leftColumn, rightColumn);
+        bottomContent.getChildren().addAll(leftColumn, bottomRight);
         bottom.getChildren().addAll(hboxBottom, bottomContent);
 
         //bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
@@ -103,13 +107,16 @@ public class VueDuJeu extends BorderPane {
         joueursVBox = new VBox();
         joueursVBox.setSpacing(10);
         updateJoueursVBox();
+        VBox rightContainer = new VBox();
         Label titleLabel = new Label("Joueurs dans jeu");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-
-        VBox rightContainer = new VBox();
-        rightContainer.getChildren().addAll(titleLabel, joueursVBox, right);
-        rightContainer.setAlignment(Pos.CENTER_RIGHT);
+        HBox titleContainer = new HBox();
+        titleContainer.getChildren().add(titleLabel);
+        titleContainer.setAlignment(Pos.TOP_LEFT);
+        rightContainer.getChildren().addAll(titleContainer, joueursVBox, right);
+        rightContainer.setAlignment(Pos.CENTER);
         rightContainer.setSpacing(20);
+
 
         setTop(top);
         setCenter(centerPane);
@@ -261,18 +268,21 @@ public class VueDuJeu extends BorderPane {
     //fix and understand if there have to be cartes de reserve or cartes en jeu on the top
     private Button createCarteButtonFromReserve(Carte c, IntegerProperty nbCarteReserve) {
         Button carte = new Button();
-        carte.setOnAction(event -> {
-            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
-            int currentNbCarte = nbCarteReserve.get();
-            if (currentNbCarte > 0) {
-                nbCarteReserve.set(currentNbCarte - 1);
-                if (nbCarteReserve.get() == 0) {
-                    cartesEnReserve.getChildren().remove(carte.getParent());
-                }
-            }
-        });
-
         createButton(c, carte);
+        carte.setOnAction(event -> {
+            IntegerProperty argent = jeu.joueurCourantProperty().get().argentProperty();
+            if (argent.getValue() >= c.getCout()) {
+                    jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
+                        int currentNbCarte = nbCarteReserve.get();
+                        if (currentNbCarte > 0) {
+                            nbCarteReserve.set(currentNbCarte - 1);
+                            carteRecues.getChildren().add(carte);
+                            if (nbCarteReserve.get() == 0) {
+                                cartesEnReserve.getChildren().remove(carte.getParent());
+                            }
+                        }
+                }
+        });
         return carte;
     }
 
