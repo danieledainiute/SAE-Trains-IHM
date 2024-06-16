@@ -1,15 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import fr.umontpellier.iut.trainsJavaFX.vues.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueAutresJoueurs"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="70.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueAutresJoueurs">
+   <children>
+      <Label fx:id="nomJoueur" layoutX="47.0" layoutY="18.0" text="Label">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <StackPane fx:id="forPoints" layoutX="241.0" layoutY="6.0" prefHeight="60.0" prefWidth="70.0">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/score.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nbRails" text="0" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane fx:id="deffause" layoutX="458.0" layoutY="6.0" prefHeight="60.0" prefWidth="70.0">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/defausse.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nbDeffause" text="0" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane fx:id="rails" layoutX="311.0" layoutY="6.0" prefHeight="60.0" prefWidth="70.0">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/rails.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nbRails" text="20" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane fx:id="deck" layoutX="388.0" layoutY="6.0" prefHeight="60.0" prefWidth="70.0">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/boutons/deck.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nbDeck" text="5" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
 </AnchorPane>

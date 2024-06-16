@@ -67,4 +67,7 @@ public class VueJoueurCourant extends AnchorPane {
         deffause.textProperty().bind(joueur.defausseProperty().sizeProperty().asString());
     }
 
+    public IJoueur getJoueurCourant() {
+        return joueur;
+    }
 }
