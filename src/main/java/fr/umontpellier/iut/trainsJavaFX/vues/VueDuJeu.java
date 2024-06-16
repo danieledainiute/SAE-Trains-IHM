@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -96,29 +97,24 @@ public class VueDuJeu extends BorderPane {
         leftColumn.getChildren().addAll(cartesEnMain);
 
         VBox bottom = new VBox();
-        //HBox bottomContent = new HBox();
+        HBox bottomContent = new HBox();
         HBox hboxBottom = new HBox();
-        TilePane forBottom = new TilePane();
-        forBottom.setPrefColumns(2);
 
         hboxBottom.getChildren().addAll(instruction);
         hboxBottom.setAlignment(Pos.CENTER);
         hboxBottom.setStyle("-fx-background-color: lightblue;");
 
-        forBottom.setHgap(30);
-        forBottom.getChildren().add(leftColumn);
-        forBottom.getChildren().add(bottomRight);
-        //forBottom.getChildren().addAll(leftColumn, bottomRight);
-        bottom.getChildren().addAll(hboxBottom, forBottom);
+        bottomContent.getChildren().addAll(leftColumn, rightColumn);
+        HBox.setHgrow(leftColumn, Priority.ALWAYS);
+        HBox.setHgrow(bottomRight, Priority.ALWAYS);
+        bottomContent.setAlignment(Pos.CENTER);
+        bottom.getChildren().addAll(hboxBottom, bottomContent);
 
-        //bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
-        bottom.setAlignment(Pos.TOP_LEFT);
         VBox right = new VBox();
         right.getChildren().addAll(passer);
         right.setAlignment(Pos.CENTER);
 
         ScrollPane top = new ScrollPane(cartesEnReserve);
-
         top.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         StackPane centerPane = new StackPane(plateau);
@@ -145,6 +141,11 @@ public class VueDuJeu extends BorderPane {
         setBottom(bottom);
         setTop(top);
         setRight(rightContainer);
+
+        BorderPane.setMargin(bottom, new Insets(10, 0, 10, 0));
+
+        BorderPane.setAlignment(rightContainer, Pos.CENTER_RIGHT);
+        BorderPane.setMargin(rightContainer, new Insets(10));
     }
 
     private AnchorPane loadVueJoueurCourant() {
