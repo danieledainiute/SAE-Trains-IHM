@@ -77,30 +77,39 @@ public class VueDuJeu extends BorderPane {
             }
             carteRecues.getChildren().clear();
         });
+
         cartesEnMain = new HBox();
         carteRecues = new HBox();
         cartesImages = new HashMap<>();
-        score = new Label("0");
-        argent = new Label("0");
         cartesEnReserve = new HBox();
         initializeCardImages();
         createCartesEnReserve();
-        VBox bottom = new VBox();
-        HBox bottomContent = new HBox();
-        VBox leftColumn = new VBox();
+
+        score = new Label("0");
+        argent = new Label("0");
 
         AnchorPane rightColumn = loadVueJoueurCourant();
         HBox bottomRight = new HBox();
         bottomRight.getChildren().addAll(rightColumn, carteRecues);
 
+        VBox leftColumn = new VBox();
         leftColumn.getChildren().addAll(cartesEnMain);
+
+        VBox bottom = new VBox();
+        //HBox bottomContent = new HBox();
         HBox hboxBottom = new HBox();
+        TilePane forBottom = new TilePane();
+        forBottom.setPrefColumns(2);
+
         hboxBottom.getChildren().addAll(instruction);
         hboxBottom.setAlignment(Pos.CENTER);
         hboxBottom.setStyle("-fx-background-color: lightblue;");
 
-        bottomContent.getChildren().addAll(leftColumn, bottomRight);
-        bottom.getChildren().addAll(hboxBottom, bottomContent);
+        forBottom.setHgap(30);
+        forBottom.getChildren().add(leftColumn);
+        forBottom.getChildren().add(bottomRight);
+        //forBottom.getChildren().addAll(leftColumn, bottomRight);
+        bottom.getChildren().addAll(hboxBottom, forBottom);
 
         //bottom.getChildren().addAll(instruction, nomJoueur, cartesEnMain);
         bottom.setAlignment(Pos.TOP_LEFT);
