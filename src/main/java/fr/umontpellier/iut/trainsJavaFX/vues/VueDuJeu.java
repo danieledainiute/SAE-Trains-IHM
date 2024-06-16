@@ -54,6 +54,8 @@ public class VueDuJeu extends BorderPane {
     private VueJoueurCourant vueJoueurCourant;
     private HBox carteRecues;
 
+    private IntegerProperty pioche = new SimpleIntegerProperty();
+
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
@@ -245,6 +247,7 @@ public class VueDuJeu extends BorderPane {
         carte.setOnAction(event -> {
             if (jeu.joueurCourantProperty().get().nbJetonsRailsProperty().getValue() < 20) {
                 jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
+                jeu.joueurCourantProperty().get().uneCarteEnJeuAEteChoisie(c.getNom());
                 cartesEnMain.getChildren().remove(carte);
             }
         });
