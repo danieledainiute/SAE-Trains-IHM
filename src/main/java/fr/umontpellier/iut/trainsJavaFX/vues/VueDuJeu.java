@@ -297,7 +297,18 @@ public class VueDuJeu extends BorderPane {
             imageView.setFitHeight(160);
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
-        carte.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
+        carte.setStyle("-fx-background-color: transparent; -fx-padding: 6;");
+
+        carte.setOnMouseEntered(event -> {
+            carte.setScaleX(1.1);
+            carte.setScaleY(1.1);
+        });
+
+        carte.setOnMouseExited(event -> {
+            carte.setScaleX(1.0);
+            carte.setScaleY(1.0);
+        });
+
 
     }
 
@@ -333,6 +344,9 @@ public class VueDuJeu extends BorderPane {
 
             Label nbCarte = new Label();
             nbCarte.textProperty().bind(nbCarteReserve.asString());
+            nbCarte.setFont(Font.font("Calibri", FontWeight.EXTRA_BOLD, 14));
+            nbCarte.setStyle("-fx-text-fill: darkblue;");
+
 
             StackPane carte = new StackPane(carteButton, nbCarte);
             StackPane.setAlignment(nbCarte, Pos.BOTTOM_CENTER);
