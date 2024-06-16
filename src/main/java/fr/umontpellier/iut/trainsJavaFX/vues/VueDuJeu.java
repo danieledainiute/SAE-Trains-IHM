@@ -48,8 +48,6 @@ public class VueDuJeu extends BorderPane {
     private Button passer;
     private HBox cartesEnMain;
     private Map<String, Image> cartesImages;
-    private Label score;
-    private Label argent;
     private HBox cartesEnReserve;
     private VBox joueursVBox;
     private VueJoueurCourant vueJoueurCourant;
@@ -87,9 +85,6 @@ public class VueDuJeu extends BorderPane {
         cartesEnReserve = new HBox();
         initializeCardImages();
         createCartesEnReserve();
-
-        score = new Label("0");
-        argent = new Label("0");
 
         //bottom
         AnchorPane rightColumn = loadVueJoueurCourant();
@@ -143,6 +138,7 @@ public class VueDuJeu extends BorderPane {
         right.setAlignment(Pos.CENTER);
         right.setSpacing(15);
         right.getChildren().addAll(joueursContainer, passer);
+        right.setPadding(new Insets(30));
 
         //setting everything up on the borderpane
         setTop(top);
@@ -168,62 +164,19 @@ public class VueDuJeu extends BorderPane {
     private void updateJoueursVBox() {
         joueursVBox.getChildren().clear();
         for (IJoueur joueur : jeu.getJoueurs()) {
-            if(joueur== vueJoueurCourant.getJoueurCourant()) continue;
-            Label nomJoueurLabel = new Label(joueur.getNom());
-            String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
-            nomJoueurLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
-
-            //score
-            Label scoreLabel = new Label();
-            scoreLabel.textProperty().bind(joueur.scoreProperty().asString());
-            scoreLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
-            scoreLabel.setTextFill(Color.rgb(255, 215, 0));
-
-            ImageView scoreImageView = new ImageView(new Image("/images/boutons/score.png"));
-            scoreImageView.setFitWidth(30);
-            scoreImageView.setFitHeight(30);
-
-            StackPane scorePane = new StackPane(scoreImageView, scoreLabel);
-            StackPane.setAlignment(scoreLabel, Pos.CENTER);
-
-            //rails
-            Label railsLabel = new Label();
-            railsLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
-            railsLabel.setTextFill(Color.rgb(255, 215, 0));
-            railsLabel.textProperty().bind(joueur.nbJetonsRailsProperty().asString());
-            ImageView railsImageView = new ImageView(new Image("/images/boutons/rails.png"));
-            railsImageView.setFitWidth(30);
-            railsImageView.setFitHeight(30);
-            StackPane railsPane = new StackPane(railsImageView, railsLabel);
-            StackPane.setAlignment(railsLabel, Pos.CENTER);
-
-            //carteEnMain
-            Label nbCarteEnMainLabel = new Label();
-            nbCarteEnMainLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
-            nbCarteEnMainLabel.setTextFill(Color.rgb(255, 215, 0));
-            nbCarteEnMainLabel.textProperty().bind(joueur.mainProperty().sizeProperty().asString());
-            ImageView nbCarteEnMainImageView = new ImageView(new Image("/images/boutons/deck.png"));
-            nbCarteEnMainImageView.setFitWidth(30);
-            nbCarteEnMainImageView.setFitHeight(30);
-            StackPane nbCarteEnMainPane = new StackPane(nbCarteEnMainImageView, nbCarteEnMainLabel);
-            StackPane.setAlignment(nbCarteEnMainLabel, Pos.CENTER);
-
-            //defausse
-            Label nbCarteEnDeFausseLabel = new Label();
-            nbCarteEnDeFausseLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
-            nbCarteEnDeFausseLabel.setTextFill(Color.rgb(255, 215, 0));
-            nbCarteEnDeFausseLabel.textProperty().bind(joueur.defausseProperty().sizeProperty().asString());
-            ImageView nbCarteEnDeFausseImageView = new ImageView(new Image("/images/boutons/defausse.png"));
-            nbCarteEnDeFausseImageView.setFitWidth(30);
-            nbCarteEnDeFausseImageView.setFitHeight(30);
-            StackPane nbCarteEnDeFaussePane = new StackPane(nbCarteEnDeFausseImageView, nbCarteEnDeFausseLabel);
-            StackPane.setAlignment(nbCarteEnDeFausseLabel, Pos.CENTER);
-
-
-            HBox joueurHBox = new HBox(10, nomJoueurLabel, scorePane, railsPane, nbCarteEnMainPane, nbCarteEnDeFaussePane);
-            joueurHBox.setAlignment(Pos.CENTER_LEFT);
-            joueursVBox.getChildren().add(joueurHBox);
-            joueurHBox.setStyle("-fx-background-color: " + couleurHex + ";");
+            if (joueur != jeu.joueurCourantProperty().get()) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/autresJoueurs.fxml"));
+                try {
+                    AnchorPane autresJoueursPane = loader.load();
+                    VueAutresJoueurs vueAutresJoueurs = loader.getController();
+                    vueAutresJoueurs.setJoueur(joueur);
+                    String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
+                    vueAutresJoueurs.setStyle("-fx-background-color: " + couleurHex + ";");
+                    joueursVBox.getChildren().add(autresJoueursPane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -251,22 +204,10 @@ public class VueDuJeu extends BorderPane {
 
         jeu.joueurCourantProperty().addListener((observable, oldValue, newValue) -> {
             updateCartesEnMain(newValue.mainProperty());
-            bindScore(newValue);
-            bindArgent(newValue);
             vueJoueurCourant.setJoueur(newValue);
+            updateJoueursVBox();
         });
-
-        bindArgent(jeu.joueurCourantProperty().get());
-        bindScore(jeu.joueurCourantProperty().get());
         plateau.creerBindings();
-    }
-
-    private void bindScore(IJoueur joueur) {
-        score.textProperty().bind(joueur.scoreProperty().asString());
-    }
-
-    private void bindArgent(IJoueur joueur) {
-        argent.textProperty().bind(joueur.argentProperty().asString());
     }
 
     public IJeu getJeu() {

@@ -22,7 +22,7 @@ public class VueAutresJoueurs extends AnchorPane {
     @FXML
     private Label nomJoueur;
     @FXML
-    private Label nbPoints;
+    private Label nbScore;
     @FXML
     private Label nbRails;
     @FXML
@@ -33,15 +33,15 @@ public class VueAutresJoueurs extends AnchorPane {
 
     @FXML
     public void initialize() {
-        // Initialization code can go here if needed
     }
 
     public void setJoueur(IJoueur joueur) {
         this.joueur = joueur;
         nomJoueur.setText(joueur.getNom());
-        nbPoints.textProperty().bind(joueur.scoreProperty().asString());
+        nbScore.textProperty().bind(joueur.scoreProperty().asString());
         nbRails.textProperty().bind(joueur.nbJetonsRailsProperty().asString());
         nbDeck.textProperty().bind(joueur.mainProperty().sizeProperty().asString());
         nbDeffause.textProperty().bind(joueur.defausseProperty().sizeProperty().asString());
+
     }
 }
