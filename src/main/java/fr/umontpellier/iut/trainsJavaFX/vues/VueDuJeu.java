@@ -64,7 +64,13 @@ public class VueDuJeu extends BorderPane {
         plateau = new VuePlateau();
         instruction = new Label();
         instruction.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
-        passer = new Button("Passer");
+        passer = new Button();
+        ImageView passerImage = new ImageView(new Image("/images/boutons/passer.png"));
+        passerImage.setFitHeight(60);
+        passerImage.setFitWidth(60);
+        passer.setGraphic(passerImage);
+        passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
             IJoueur joueurCourant = jeu.joueurCourantProperty().get();
