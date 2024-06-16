@@ -138,6 +138,7 @@ public class VueDuJeu extends BorderPane {
         right.setAlignment(Pos.CENTER);
         right.setSpacing(15);
         right.getChildren().addAll(joueursContainer, passer);
+        right.setPadding(new Insets(30));
 
         //setting everything up on the borderpane
         setTop(top);
