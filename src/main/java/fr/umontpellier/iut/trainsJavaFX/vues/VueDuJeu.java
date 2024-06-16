@@ -71,6 +71,7 @@ public class VueDuJeu extends BorderPane {
                 if (node instanceof Button) {
                     Button carteButton = (Button) node;
                     Carte carte = (Carte) carteButton.getUserData();
+                    //joueurCourant.argentProperty().set(joueurCourant.argentProperty().add(carte.getNbPointsVictoire()).getValue());
                     joueurCourant.defausseProperty().add(carte);
                 }
             }
@@ -280,24 +281,37 @@ public class VueDuJeu extends BorderPane {
         return carte;
     }
 
-    //fix and understand if there have to be cartes de reserve or cartes en jeu on the top
     private Button createCarteButtonFromReserve(Carte c, IntegerProperty nbCarteReserve) {
         Button carte = new Button();
         createButton(c, carte);
+
         carte.setOnAction(event -> {
-            IntegerProperty argent = jeu.joueurCourantProperty().get().argentProperty();
+            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+            IntegerProperty argent = joueurCourant.argentProperty();
+
             if (argent.getValue() >= c.getCout()) {
-                    jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
-                        int currentNbCarte = nbCarteReserve.get();
-                        if (currentNbCarte > 0) {
-                            nbCarteReserve.set(currentNbCarte - 1);
-                            carteRecues.getChildren().add(carte);
-                            if (nbCarteReserve.get() == 0) {
-                                cartesEnReserve.getChildren().remove(carte.getParent());
-                            }
-                        }
+                jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
+                int currentNbCarte = nbCarteReserve.get();
+
+                if (currentNbCarte > 0) {
+                    nbCarteReserve.set(currentNbCarte - 1);
+                    Button carteToAdd = new Button();
+                    createButton(c, carteToAdd);
+                    carteRecues.getChildren().add(carteToAdd);
                 }
+
+                if (currentNbCarte == 1) {
+                    Node parent = carte.getParent();
+
+                    if (parent instanceof StackPane) {
+                        StackPane stackPane = (StackPane) parent;
+                        stackPane.getChildren().clear();
+                        cartesEnReserve.getChildren().remove(stackPane);
+                    }
+                }
+            }
         });
+
         return carte;
     }
 
