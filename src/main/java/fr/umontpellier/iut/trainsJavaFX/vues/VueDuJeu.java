@@ -48,8 +48,6 @@ public class VueDuJeu extends BorderPane {
     private Button passer;
     private HBox cartesEnMain;
     private Map<String, Image> cartesImages;
-    private Label score;
-    private Label argent;
     private HBox cartesEnReserve;
     private VBox joueursVBox;
     private VueJoueurCourant vueJoueurCourant;
@@ -88,9 +86,6 @@ public class VueDuJeu extends BorderPane {
         cartesEnReserve = new HBox();
         initializeCardImages();
         createCartesEnReserve();
-
-        score = new Label("0");
-        argent = new Label("0");
 
         //bottom
         AnchorPane rightColumn = loadVueJoueurCourant();
@@ -252,22 +247,9 @@ public class VueDuJeu extends BorderPane {
 
         jeu.joueurCourantProperty().addListener((observable, oldValue, newValue) -> {
             updateCartesEnMain(newValue.mainProperty());
-            bindScore(newValue);
-            bindArgent(newValue);
             vueJoueurCourant.setJoueur(newValue);
         });
-
-        bindArgent(jeu.joueurCourantProperty().get());
-        bindScore(jeu.joueurCourantProperty().get());
         plateau.creerBindings();
-    }
-
-    private void bindScore(IJoueur joueur) {
-        score.textProperty().bind(joueur.scoreProperty().asString());
-    }
-
-    private void bindArgent(IJoueur joueur) {
-        argent.textProperty().bind(joueur.argentProperty().asString());
     }
 
     public IJeu getJeu() {
