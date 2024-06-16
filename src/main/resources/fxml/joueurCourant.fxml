@@ -58,14 +58,14 @@
                   <Image url="@../images/boutons/rail.png" />
                </image>
             </ImageView>
-            <Label fx:id="rail" text="0" textFill="#ffe137">
+            <Label fx:id="rail" text="0" textFill="#ffd900">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="deffauseStacl" layoutX="417.0" layoutY="109.0" prefHeight="40.0" prefWidth="50.0">
+      <StackPane fx:id="deffauseStack" layoutX="417.0" layoutY="109.0" prefHeight="40.0" prefWidth="50.0">
          <children>
             <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
