@@ -17,16 +17,17 @@ import javafx.stage.Stage;
 public class VueResultats extends BorderPane {
 
     private TrainsIHM ihm;
+    private Stage stage;
 
     public VueResultats(TrainsIHM ihm) {
         this.ihm = ihm;
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Résultats du jeu");
         afficherResultats();
     }
 
     public void afficherResultats() {
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Résultats du jeu");
 
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
@@ -63,13 +64,15 @@ public class VueResultats extends BorderPane {
         Button closeButton = new Button("Fermer");
         closeButton.setOnAction(event -> stage.close());
 
-        Button restartButton = new Button("Rejouer");
+        /*Button restartButton = new Button("Rejouer");
         restartButton.setOnAction(event -> {
-            stage.close();
-            ihm.demarrerPartie();
-        });
+            //ihm.demarrerPartie();
+            //stage.close();
+            restartApplication();
+
+        });*/
         HBox forButtons = new HBox();
-        forButtons.getChildren().addAll(closeButton, restartButton);
+        forButtons.getChildren().addAll(closeButton);
         forButtons.setSpacing(30);
         forButtons.setAlignment(Pos.CENTER);
         layout.getChildren().add(forButtons);
@@ -80,4 +83,11 @@ public class VueResultats extends BorderPane {
         stage.setScene(scene);
         stage.showAndWait();
     }
+
+    /*private void restartApplication() {
+        //stage.close();
+        TrainsIHM newIhm = new TrainsIHM();
+        Stage primaryStage = new Stage();
+        newIhm.start(primaryStage);
+    }*/
 }
