@@ -54,7 +54,6 @@ public class VueDuJeu extends BorderPane {
     private VueJoueurCourant vueJoueurCourant;
     private HBox carteRecues;
 
-    private IntegerProperty pioche = new SimpleIntegerProperty();
 
 
     public VueDuJeu(IJeu jeu) {
@@ -71,15 +70,6 @@ public class VueDuJeu extends BorderPane {
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
-            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-            for (Node node : carteRecues.getChildren()) {
-                if (node instanceof Button) {
-                    Button carteButton = (Button) node;
-                    Carte carte = (Carte) carteButton.getUserData();
-                    joueurCourant.defausseProperty().add(carte);
-                }
-            }
-            carteRecues.getChildren().clear();
         });
 
         cartesEnMain = new HBox();
@@ -247,7 +237,7 @@ public class VueDuJeu extends BorderPane {
         carte.setOnAction(event -> {
             if (jeu.joueurCourantProperty().get().nbJetonsRailsProperty().getValue() < 20) {
                 jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
-                jeu.joueurCourantProperty().get().uneCarteEnJeuAEteChoisie(c.getNom());
+                //jeu.joueurCourantProperty().get().uneCarteEnJeuAEteChoisie(c.getNom());
                 cartesEnMain.getChildren().remove(carte);
             }
         });
