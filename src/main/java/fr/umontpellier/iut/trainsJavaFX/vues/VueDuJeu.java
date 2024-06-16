@@ -1,19 +1,11 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
-
-import fr.umontpellier.iut.trainsJavaFX.GestionJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -60,7 +51,6 @@ public class VueDuJeu extends BorderPane {
         plateau = new VuePlateau();
         instruction = new Label();
         instruction.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
-
         passer = new Button();
         ImageView passerImage = new ImageView(new Image("/images/boutons/passer.png"));
         passerImage.setFitHeight(60);
@@ -69,23 +59,13 @@ public class VueDuJeu extends BorderPane {
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
-            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-            for (Node node : carteRecues.getChildren()) {
-                if (node instanceof Button) {
-                    Button carteButton = (Button) node;
-                    Carte carte = (Carte) carteButton.getUserData();
-                    joueurCourant.defausseProperty().add(carte);
-                }
-            }
-            carteRecues.getChildren().clear();
         });
-
         cartesEnMain = new HBox();
         carteRecues = new HBox();
         cartesImages = new HashMap<>();
         cartesEnReserve = new HBox();
         initializeCardImages();
-        createCartesEnReserve();
+        this.cartesEnReserve = new CartesEnReserve(jeu, carteRecues);
 
         //bottom
         AnchorPane rightColumn = loadVueJoueurCourant();
@@ -248,64 +228,8 @@ public class VueDuJeu extends BorderPane {
             }
         });
 
-        createButton(c, carte);
+        CarteUtils.createButton(carte, c.getNom());
         return carte;
-    }
-
-    private Button createCarteButtonFromReserve(Carte c, IntegerProperty nbCarteReserve) {
-        Button carte = new Button();
-        createButton(c, carte);
-
-        carte.setOnAction(event -> {
-            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-            IntegerProperty argent = joueurCourant.argentProperty();
-            int money = argent.getValue();
-            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
-            if (money >= c.getCout()) {
-                int currentNbCarte = nbCarteReserve.get();
-
-                if (currentNbCarte > 0) {
-                    nbCarteReserve.set(currentNbCarte - 1);
-                    Button carteToAdd = new Button();
-                    createButton(c, carteToAdd);
-                    carteRecues.getChildren().add(carteToAdd);
-                }
-
-                if (currentNbCarte == 0) {
-                    Node parent = carte.getParent();
-
-                    if (parent instanceof StackPane) {
-                        StackPane stackPane = (StackPane) parent;
-                        stackPane.getChildren().clear();
-                        cartesEnReserve.getChildren().remove(stackPane);
-                    }
-                }
-            }
-        });
-
-        return carte;
-    }
-
-    private void createButton(Carte c, Button carte) {
-        String imageFileName = convertCardNameToImageFileName(c.getNom());
-        Image card = cartesImages.get(imageFileName);
-        if (card != null) {
-            ImageView imageView = new ImageView(card);
-            imageView.setFitWidth(120);
-            imageView.setFitHeight(160);
-            carte.setGraphic(imageView);
-        } else carte.setText(c.getNom());
-        carte.setStyle("-fx-background-color: transparent; -fx-padding: 6;");
-
-        carte.setOnMouseEntered(event -> {
-            carte.setScaleX(1.1);
-            carte.setScaleY(1.1);
-        });
-
-        carte.setOnMouseExited(event -> {
-            carte.setScaleX(1.0);
-            carte.setScaleY(1.0);
-        });
     }
 
 
@@ -318,7 +242,7 @@ public class VueDuJeu extends BorderPane {
     }
 
     private void createImage(Carte c) {
-        String imageFileName = convertCardNameToImageFileName(c.getNom());
+        String imageFileName = CarteUtils.convertCardNameToImageFileName(c.getNom());
         String path = "/images/cartes/" + imageFileName;
         InputStream imageStream = getClass().getResourceAsStream(path);
         if (imageStream != null) {
@@ -327,27 +251,6 @@ public class VueDuJeu extends BorderPane {
         }
     }
 
-    private String convertCardNameToImageFileName(String card) {
-        return card.toLowerCase().replace(" ", "_")
-                .replace("é", "e")
-                .replace("ô", "o") + ".jpg";
-    }
-
-    private void createCartesEnReserve() {
-        for (Carte c : jeu.getReserve()) {
-            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(GestionJeu.getJeu().getTaillesPilesReserveProperties().get(c.getNom()).getValue());
-            Button carteButton = createCarteButtonFromReserve(c, nbCarteReserve);
-            Label nbCarte = new Label();
-            nbCarte.textProperty().bind(nbCarteReserve.asString());
-            nbCarte.setFont(Font.font("Calibri", FontWeight.EXTRA_BOLD, 14));
-            nbCarte.setStyle("-fx-text-fill: darkblue;");
-
-            StackPane carte = new StackPane(carteButton, nbCarte);
-            StackPane.setAlignment(nbCarte, Pos.BOTTOM_CENTER);
-
-            cartesEnReserve.getChildren().add(carte);
-        }
-    }
 
     private Button trouverBoutonCarte(Carte carteATrouver) {
         for (Node node : cartesEnMain.getChildren()) {
