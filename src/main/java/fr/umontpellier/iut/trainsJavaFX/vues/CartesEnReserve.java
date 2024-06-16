@@ -9,18 +9,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.util.Objects;
-
-/**
- * Cette classe gère l'affichage des cartes disponibles dans la réserve du jeu.
- */
 public class CartesEnReserve extends HBox {
 
     private final IJeu jeu;
@@ -33,48 +26,44 @@ public class CartesEnReserve extends HBox {
     }
 
     private void createCartesEnReserve() {
-        for (Carte c : jeu.getReserve()) {
-            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(GestionJeu.getJeu().getTaillesPilesReserveProperties().get(c.getNom()).getValue());
-            Button carteButton = createCarteButtonFromReserve(c, nbCarteReserve);
-            Label nbCarte = new Label();
-            nbCarte.textProperty().bind(nbCarteReserve.asString());
-            nbCarte.setFont(Font.font("Calibri", FontWeight.EXTRA_BOLD, 14));
-            nbCarte.setStyle("-fx-text-fill: darkblue;");
+        jeu.getReserve().forEach(carte -> {
+            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(
+                    GestionJeu.getJeu().getTaillesPilesReserveProperties().get(carte.getNom()).getValue()
+            );
+            StackPane carteStackPane = new StackPane(
+                    createCarteButton(carte, nbCarteReserve),
+                    createNbCarteLabel(nbCarteReserve)
+            );
+            StackPane.setAlignment(carteStackPane.getChildren().get(1), Pos.BOTTOM_CENTER);
+            getChildren().add(carteStackPane);
+        });
+    }
 
-            StackPane carte = new StackPane();
-            carte.getChildren().addAll(carteButton, nbCarte);
-            StackPane.setAlignment(nbCarte, Pos.BOTTOM_CENTER);
+    private Button createCarteButton(Carte carte, IntegerProperty nbCarteReserve) {
+        Button carteButton = new Button();
+        CarteUtils.createButton(carteButton, carte.getNom());
+        carteButton.setOnAction(event -> handleCarteButtonAction(carte, nbCarteReserve, carteButton));
+        return carteButton;
+    }
 
-            getChildren().add(carte);
+    private Label createNbCarteLabel(IntegerProperty nbCarteReserve) {
+        Label nbCarteLabel = new Label();
+        nbCarteLabel.textProperty().bind(nbCarteReserve.asString());
+        nbCarteLabel.setFont(Font.font("Calibri", FontWeight.EXTRA_BOLD, 14));
+        nbCarteLabel.setStyle("-fx-text-fill: darkblue;");
+        return nbCarteLabel;
+    }
+
+    private void handleCarteButtonAction(Carte carte, IntegerProperty nbCarteReserve, Button carteButton) {
+        IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+        int money = joueurCourant.argentProperty().getValue();
+        jeu.uneCarteDeLaReserveEstAchetee(carte.getNom());
+        if (money >= carte.getCout() && nbCarteReserve.get() > 0) {
+            nbCarteReserve.set(nbCarteReserve.get() - 1);
+            cartesRecues.getChildren().add(createCarteButton(carte, nbCarteReserve));
+        }
+        if (nbCarteReserve.get() == 0) {
+            getChildren().remove(carteButton.getParent());
         }
     }
-
-    private Button createCarteButtonFromReserve(Carte c, IntegerProperty nbCarteReserve) {
-        Button carte = new Button();
-        CarteUtils.createButton(carte, c.getNom());
-        carte.setOnAction(event -> {
-            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-            IntegerProperty argent = joueurCourant.argentProperty();
-            int money = argent.getValue();
-            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
-            if (money >= c.getCout()) {
-                int currentNbCarte = nbCarteReserve.get();
-
-                if (currentNbCarte > 0) {
-                    nbCarteReserve.set(currentNbCarte - 1);
-                    Button carteToAdd = new Button();
-                    CarteUtils.createButton(carteToAdd, c.getNom());
-                    cartesRecues.getChildren().add(carteToAdd);
-                }
-
-                if (currentNbCarte == 0) {
-                    StackPane parent = (StackPane) carte.getParent();
-                    getChildren().remove(parent);
-                }
-            }
-        });
-
-        return carte;
-    }
-
 }
