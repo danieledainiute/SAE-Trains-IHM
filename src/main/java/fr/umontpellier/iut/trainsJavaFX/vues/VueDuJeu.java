@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
+import fr.umontpellier.iut.trainsJavaFX.GestionJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
@@ -326,7 +327,7 @@ public class VueDuJeu extends BorderPane {
 
     private void createCartesEnReserve() {
         for (Carte c : jeu.getReserve()) {
-            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(10);
+            IntegerProperty nbCarteReserve = GestionJeu.getJeu().getTaillesPilesReserveProperties().get(c.getNom());
             Button carteButton = createCarteButtonFromReserve(c, nbCarteReserve);
 
             Label nbCarte = new Label();
