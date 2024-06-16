@@ -69,15 +69,6 @@ public class VueDuJeu extends BorderPane {
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
-            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-            for (Node node : carteRecues.getChildren()) {
-                if (node instanceof Button) {
-                    Button carteButton = (Button) node;
-                    Carte carte = (Carte) carteButton.getUserData();
-                    joueurCourant.defausseProperty().add(carte);
-                }
-            }
-            carteRecues.getChildren().clear();
         });
 
         cartesEnMain = new HBox();
@@ -222,6 +213,7 @@ public class VueDuJeu extends BorderPane {
     private void updateCartesEnMain(ListeDeCartes main) {
         cartesEnMain.getChildren().clear();
         for (Carte c : main) {
+            if (c == null) continue;
             Button carteButton = createCarteButton(c);
             cartesEnMain.getChildren().add(carteButton);
         }
@@ -232,6 +224,7 @@ public class VueDuJeu extends BorderPane {
             if (node instanceof Button) {
                 Button carteButton = (Button) node;
                 Carte carte = (Carte) carteButton.getUserData();
+                if (carte == null) continue;
                 joueur.defausseProperty().add(carte);
             }
         }
