@@ -5,7 +5,9 @@ import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
@@ -256,9 +258,12 @@ public class VueDuJeu extends BorderPane {
     //fix what the buttons do when pressed
     private Button createCarteButton(Carte c) {
         Button carte = new Button();
+
         carte.setOnAction(event -> {
-            jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
-            cartesEnMain.getChildren().remove(carte); // Remove the button when it is clicked
+            if (jeu.joueurCourantProperty().get().nbJetonsRailsProperty().getValue() < 20) {
+                jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
+                cartesEnMain.getChildren().remove(carte); // Remove the button when it is clicked
+            }
         });
 
         createButton(c, carte);
