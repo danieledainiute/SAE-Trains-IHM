@@ -3,6 +3,7 @@ package fr.umontpellier.iut.trainsJavaFX.vues;
 import fr.umontpellier.iut.trainsJavaFX.GestionJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
+import fr.umontpellier.iut.trainsJavaFX.TrainsIHM;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
@@ -10,7 +11,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,11 +30,13 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -53,7 +59,7 @@ public class VueDuJeu extends BorderPane {
     private VBox joueursVBox;
     private VueJoueurCourant vueJoueurCourant;
     private HBox carteRecues;
-
+    //private VueResultats vueResultats;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -139,7 +145,24 @@ public class VueDuJeu extends BorderPane {
         setBottom(bottom);
         setTop(top);
         setRight(right);
+
+
+        /*jeu.finDePartieProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                showVueResultats();
+            }
+        });*/
     }
+    /*private void showVueResultats() {
+        if (vueResultats == null) {
+            vueResultats = new VueResultats((TrainsIHM) jeu);
+        }
+
+        Stage stage = (Stage) this.getScene().getWindow();
+        Scene scene = new Scene(vueResultats);
+        stage.setScene(scene);
+        stage.show();
+    }*/
 
     private AnchorPane loadVueJoueurCourant() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/joueurCourant.fxml"));
@@ -301,7 +324,6 @@ public class VueDuJeu extends BorderPane {
 
 
     }
-
 
     private void initializeCardImages() {
         for (Carte c : jeu.getReserve()) {
