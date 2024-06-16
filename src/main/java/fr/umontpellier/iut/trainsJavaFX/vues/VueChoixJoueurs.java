@@ -34,12 +34,12 @@ public class VueChoixJoueurs extends Stage {
 
     private void createUI() {
         Pane pane = new Pane();
-        pane.setPrefWidth(800);
-        pane.setPrefHeight(600);
-        pane.setStyle("-fx-background-image: url('/images/TokyoSansContour.jpg'); -fx-background-size: cover;");
+        pane.setPrefWidth(1000);
+        pane.setPrefHeight(800);
+        pane.setStyle("-fx-background-image: url('/images/trains.png'); -fx-background-size: cover;");
 
         Pane menu = new Pane();
-        menu.relocate(450, 100);
+        menu.relocate(370, 300);
         menu.setPrefSize(300, 400);
         menu.setBorder(new Border(new BorderStroke(Color.DARKRED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
         menu.setStyle("-fx-stroke: darkred; -fx-stroke-width: 6; -fx-background-radius: 7; -fx-background-color: #F5F5DC;");
