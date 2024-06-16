@@ -46,7 +46,6 @@ public class VueDuJeu extends BorderPane {
     private VueJoueurCourant vueJoueurCourant;
     private HBox carteRecues;
 
-
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
         plateau = new VuePlateau();
@@ -185,7 +184,7 @@ public class VueDuJeu extends BorderPane {
             updateCartesEnMain(newValue.mainProperty());
             vueJoueurCourant.setJoueur(newValue);
             updateJoueursVBox();
-            updateCartesRecues(oldValue);
+            carteRecues.getChildren().clear();
         });
         for (IJoueur joueur : jeu.getJoueurs()) {
             joueur.mainProperty().addListener((ListChangeListener<Carte>) change -> {
@@ -204,37 +203,26 @@ public class VueDuJeu extends BorderPane {
         cartesEnMain.getChildren().clear();
         for (Carte c : main) {
             if (c == null) continue;
-            Button carteButton = createCarteButton(c);
+            Button carteButton = createCarteButton(c, true);
             cartesEnMain.getChildren().add(carteButton);
         }
     }
 
-    private void updateCartesRecues(IJoueur joueur) {
-        for (Node node : carteRecues.getChildren()) {
-            if (node instanceof Button) {
-                Button carteButton = (Button) node;
-                Carte carte = (Carte) carteButton.getUserData();
-                if (carte == null) continue;
-                joueur.defausseProperty().add(carte);
-            }
-        }
-        carteRecues.getChildren().clear();
-    }
-
-    private Button createCarteButton(Carte c) {
+    private Button createCarteButton(Carte c, boolean isFromHand) {
         Button carte = new Button();
-
         carte.setOnAction(event -> {
-            if (jeu.joueurCourantProperty().get().nbJetonsRailsProperty().getValue() < 20) {
+            if (isFromHand) {
                 jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
                 cartesEnMain.getChildren().remove(carte);
+            } else {
+                jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
+                carteRecues.getChildren().add(carte);
             }
         });
 
         CarteUtils.createButton(carte, c.getNom());
         return carte;
     }
-
 
     private void initializeCardImages() {
         for (Carte c : jeu.getReserve()) {
@@ -253,7 +241,6 @@ public class VueDuJeu extends BorderPane {
             cartesImages.put(imageFileName, image);
         }
     }
-
 
     private Button trouverBoutonCarte(Carte carteATrouver) {
         for (Node node : cartesEnMain.getChildren()) {
