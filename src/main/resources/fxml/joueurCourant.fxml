@@ -79,7 +79,7 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane fx:id="deckStack" layoutX="420.0" layoutY="60.0" prefHeight="40.0" prefWidth="50.0">
+      <StackPane fx:id="deckStack" layoutX="395.0" layoutY="60.0" prefHeight="40.0" prefWidth="50.0">
          <children>
             <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -93,12 +93,26 @@
             </Label>
          </children>
       </StackPane>
+      <StackPane fx:id="piocheStack" layoutX="445.0" layoutY="60.0" prefHeight="40.0" prefWidth="50.0">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/pioche.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="pioche" text="0" textFill="#e4c515">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
       <Label fx:id="joueurEnJeu" layoutX="14.0" layoutY="15.0" text="En jeu">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="recues" layoutX="370.0" layoutY="101.0" text="Recues">
+      <Label fx:id="recues" layoutX="346.0" layoutY="102.0" text="Recues">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

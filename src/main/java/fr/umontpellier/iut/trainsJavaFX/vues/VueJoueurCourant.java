@@ -35,6 +35,8 @@ public class VueJoueurCourant extends AnchorPane {
     private Label deck;
     @FXML
     private Label joueurEnJeu;
+    @FXML
+    private Label pioche;
 
     private IJoueur joueur;
 
@@ -65,6 +67,7 @@ public class VueJoueurCourant extends AnchorPane {
         rail.textProperty().bind(joueur.pointsRailsProperty().asString());
         deck.textProperty().bind(joueur.mainProperty().sizeProperty().asString());
         deffause.textProperty().bind(joueur.defausseProperty().sizeProperty().asString());
+        pioche.textProperty().bind(joueur.piocheProperty().sizeProperty().asString());
     }
 
     public IJoueur getJoueurCourant() {
