@@ -101,7 +101,7 @@ public class VueChoixJoueurs extends Stage {
     private void demarrerPartie() {
         Integer nombreJoueur = comboBoxNombreJoueurs.getValue();
         if (nombreJoueur == null) {
-            showError("Veuillez choisir un nombre de joueur possible");
+            showError("Veuillez choisir un nombre possible de joueurs");
             return;
         }
         String plateauChoisi = comboBoxPlateau.getValue();

@@ -68,14 +68,14 @@ public class VueDuJeu extends BorderPane {
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
-//            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-//            for (Node node : carteRecues.getChildren()) {
-//                if (node instanceof Button) {
-//                    Button carteButton = (Button) node;
-//                    Carte carte = (Carte) carteButton.getUserData();
-//                    joueurCourant.defausseProperty().add(carte);
-//                }
-//            }
+            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+            for (Node node : carteRecues.getChildren()) {
+                if (node instanceof Button) {
+                    Button carteButton = (Button) node;
+                    Carte carte = (Carte) carteButton.getUserData();
+                    joueurCourant.defausseProperty().add(carte);
+                }
+            }
             carteRecues.getChildren().clear();
         });
 
@@ -204,7 +204,14 @@ public class VueDuJeu extends BorderPane {
             updateCartesEnMain(newValue.mainProperty());
             vueJoueurCourant.setJoueur(newValue);
             updateJoueursVBox();
+            updateCartesRecues(oldValue);
         });
+        for (IJoueur joueur : jeu.getJoueurs()) {
+            joueur.mainProperty().addListener((ListChangeListener<Carte>) change -> {
+                updateCartesEnMain(joueur.mainProperty());
+            });
+        }
+
         plateau.creerBindings();
     }
 
@@ -220,13 +227,24 @@ public class VueDuJeu extends BorderPane {
         }
     }
 
+    private void updateCartesRecues(IJoueur joueur) {
+        for (Node node : carteRecues.getChildren()) {
+            if (node instanceof Button) {
+                Button carteButton = (Button) node;
+                Carte carte = (Carte) carteButton.getUserData();
+                joueur.defausseProperty().add(carte);
+            }
+        }
+        carteRecues.getChildren().clear();
+    }
+
     private Button createCarteButton(Carte c) {
         Button carte = new Button();
 
         carte.setOnAction(event -> {
             if (jeu.joueurCourantProperty().get().nbJetonsRailsProperty().getValue() < 20) {
                 jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
-                cartesEnMain.getChildren().remove(carte); // Remove the button when it is clicked
+                cartesEnMain.getChildren().remove(carte);
             }
         });
 
@@ -278,6 +296,7 @@ public class VueDuJeu extends BorderPane {
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
         carte.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
+
     }
 
 
