@@ -184,7 +184,7 @@ public class VueDuJeu extends BorderPane {
             updateCartesEnMain(newValue.mainProperty());
             vueJoueurCourant.setJoueur(newValue);
             updateJoueursVBox();
-            carteRecues.getChildren().clear();
+            updateCartesRecues(oldValue);
         });
         for (IJoueur joueur : jeu.getJoueurs()) {
             joueur.mainProperty().addListener((ListChangeListener<Carte>) change -> {
@@ -203,20 +203,31 @@ public class VueDuJeu extends BorderPane {
         cartesEnMain.getChildren().clear();
         for (Carte c : main) {
             if (c == null) continue;
-            Button carteButton = createCarteButton(c, true);
+            Button carteButton = createCarteButton(c);
             cartesEnMain.getChildren().add(carteButton);
         }
     }
 
-    private Button createCarteButton(Carte c, boolean isFromHand) {
+    private void updateCartesRecues(IJoueur joueur) {
+        for (Node node : carteRecues.getChildren()) {
+            if (node instanceof Button) {
+                Button carteButton = (Button) node;
+                Carte carte = (Carte) carteButton.getUserData();
+                if (carte == null) continue;
+                joueur.defausseProperty().add(carte);
+            }
+        }
+        carteRecues.getChildren().clear();
+    }
+
+
+    private Button createCarteButton(Carte c) {
         Button carte = new Button();
+
         carte.setOnAction(event -> {
-            if (isFromHand) {
+            if (jeu.joueurCourantProperty().get().nbJetonsRailsProperty().getValue() < 20) {
                 jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
                 cartesEnMain.getChildren().remove(carte);
-            } else {
-                jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
-                carteRecues.getChildren().add(carte);
             }
         });
 
