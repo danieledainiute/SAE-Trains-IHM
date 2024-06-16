@@ -23,4 +23,8 @@ public class VueCarte extends StackPane {
         setOnMouseClicked(quandCarteEstChoisie);
     }
 
+    public ICarte getCarte() {
+        return carte;
+    }
+
 }

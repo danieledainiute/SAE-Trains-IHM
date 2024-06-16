@@ -1,6 +1,8 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
+import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
+import fr.umontpellier.iut.trainsJavaFX.mecanique.Joueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
@@ -11,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Cette classe présente les éléments des joueurs autres que le joueur courant,
