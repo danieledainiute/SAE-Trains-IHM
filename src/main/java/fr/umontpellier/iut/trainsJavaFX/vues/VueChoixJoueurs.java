@@ -1,7 +1,5 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
-
 import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.Plateau;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
