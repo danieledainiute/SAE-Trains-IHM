@@ -70,15 +70,14 @@ public class VueDuJeu extends BorderPane {
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
-            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-            for (Node node : carteRecues.getChildren()) {
-                if (node instanceof Button) {
-                    Button carteButton = (Button) node;
-                    Carte carte = (Carte) carteButton.getUserData();
-                    //joueurCourant.argentProperty().set(joueurCourant.argentProperty().add(carte.getNbPointsVictoire()).getValue());
-                    joueurCourant.defausseProperty().add(carte);
-                }
-            }
+//            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+//            for (Node node : carteRecues.getChildren()) {
+//                if (node instanceof Button) {
+//                    Button carteButton = (Button) node;
+//                    Carte carte = (Carte) carteButton.getUserData();
+//                    joueurCourant.defausseProperty().add(carte);
+//                }
+//            }
             carteRecues.getChildren().clear();
         });
 
