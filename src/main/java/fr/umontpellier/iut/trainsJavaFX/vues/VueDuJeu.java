@@ -66,18 +66,6 @@ public class VueDuJeu extends BorderPane {
         passerImage.setFitWidth(60);
         passer.setGraphic(passerImage);
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
-        passer.setOnMouseClicked(event -> {
-            jeu.passerAEteChoisi();
-//            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-//            for (Node node : carteRecues.getChildren()) {
-//                if (node instanceof Button) {
-//                    Button carteButton = (Button) node;
-//                    Carte carte = (Carte) carteButton.getUserData();
-//                    joueurCourant.defausseProperty().add(carte);
-//                }
-//            }
-            carteRecues.getChildren().clear();
-        });
 
         cartesEnMain = new HBox();
         carteRecues = new HBox();
@@ -183,6 +171,10 @@ public class VueDuJeu extends BorderPane {
         plateau.prefHeightProperty().bind(getScene().heightProperty());
         instruction.textProperty().bind(jeu.instructionProperty());
 
+        passer.setOnMouseClicked(event -> {
+            passerClick();
+        });
+
         for (IJoueur joueur : jeu.getJoueurs()) {
             joueur.mainProperty().addListener((ListChangeListener<Carte>) change -> {
                 while (change.next()) {
@@ -210,6 +202,18 @@ public class VueDuJeu extends BorderPane {
 
     public IJeu getJeu() {
         return jeu;
+    }
+    public void passerClick() {
+        jeu.passerAEteChoisi();
+//            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+//            for (Node node : carteRecues.getChildren()) {
+//                if (node instanceof Button) {
+//                    Button carteButton = (Button) node;
+//                    Carte carte = (Carte) carteButton.getUserData();
+//                    joueurCourant.defausseProperty().add(carte);
+//                }
+//            }
+        carteRecues.getChildren().clear();
     }
 
     private void updateCartesEnMain(ListeDeCartes main) {
