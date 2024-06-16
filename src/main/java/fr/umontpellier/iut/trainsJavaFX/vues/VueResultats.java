@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
 import fr.umontpellier.iut.trainsJavaFX.TrainsIHM;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,23 +12,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class VueResultats extends BorderPane {
 
     private TrainsIHM ihm;
-    private Stage stage;
+    private Scene scene;
 
     public VueResultats(TrainsIHM ihm) {
         this.ihm = ihm;
-        stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Résultats du jeu");
         afficherResultats();
     }
 
     public void afficherResultats() {
-
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
@@ -61,32 +59,25 @@ public class VueResultats extends BorderPane {
         });
 
         Button closeButton = new Button("Fermer");
-        closeButton.setOnAction(event -> stage.close());
+        closeButton.setOnAction(event ->
+                ihm.getPrimaryStage().close() );
 
-        /*Button restartButton = new Button("Rejouer");
-        restartButton.setOnAction(event -> {
-            //ihm.demarrerPartie();
-            //stage.close();
-            restartApplication();
+        Button restartButton = new Button("Rejouer");
+        restartButton.setOnAction(event -> ihm.demarrerPartie());
 
-        });*/
         HBox forButtons = new HBox();
-        forButtons.getChildren().addAll(closeButton);
+        forButtons.getChildren().addAll(closeButton, restartButton);
         forButtons.setSpacing(30);
         forButtons.setAlignment(Pos.CENTER);
         layout.getChildren().add(forButtons);
 
         setCenter(layout);
 
-        Scene scene = new Scene(this, 300, 200);
-        stage.setScene(scene);
-        stage.showAndWait();
-    }
+        scene = new Scene(this, 300, 200);
 
-    /*private void restartApplication() {
-        //stage.close();
-        TrainsIHM newIhm = new TrainsIHM();
-        Stage primaryStage = new Stage();
-        newIhm.start(primaryStage);
-    }*/
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        ihm.getPrimaryStage().setX(screenWidth / 2 - 200);
+        ihm.getPrimaryStage().setY(screenHeight / 2 - 150);
+    }
 }
