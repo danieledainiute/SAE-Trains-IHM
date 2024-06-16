@@ -17,14 +17,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -116,10 +113,6 @@ public class VueDuJeu extends BorderPane {
         VBox bottom = new VBox();
         bottom.getChildren().addAll(hboxBottom, bottomContent);
 
-        VBox right = new VBox();
-        right.getChildren().addAll(passer);
-        right.setAlignment(Pos.CENTER);
-
         ScrollPane top = new ScrollPane(cartesEnReserve);
         top.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -131,27 +124,34 @@ public class VueDuJeu extends BorderPane {
         joueursVBox = new VBox();
         joueursVBox.setSpacing(10);
         updateJoueursVBox();
-        VBox rightContainer = new VBox();
-        Label titleLabel = new Label("Joueurs dans jeu");
+        VBox joueursContainer = new VBox();
+        Label titleLabel = new Label("Vous jouez contre");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         HBox titleContainer = new HBox();
         titleContainer.getChildren().add(titleLabel);
         titleContainer.setAlignment(Pos.TOP_LEFT);
-        rightContainer.getChildren().addAll(titleContainer, joueursVBox, right);
-        rightContainer.setAlignment(Pos.CENTER);
-        rightContainer.setSpacing(20);
+        joueursContainer.getChildren().addAll(titleContainer, joueursVBox);
+        joueursContainer.setAlignment(Pos.CENTER);
+        joueursContainer.setSpacing(20);
+        joueursContainer.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10;");
+        joueursContainer.setPadding(new Insets(15));
 
+        VBox right = new VBox();
+        right.setAlignment(Pos.CENTER);
+        //right.setPadding(new Insets(100));
+        right.setSpacing(15);
+        right.getChildren().addAll(joueursContainer, passer);
 
         setTop(top);
         setCenter(centerPane);
         setBottom(bottom);
         setTop(top);
-        setRight(rightContainer);
+        setRight(right);
 
-        BorderPane.setMargin(bottom, new Insets(10, 0, 10, 0));
+        /*BorderPane.setMargin(bottom, new Insets(10, 0, 10, 0));
 
         BorderPane.setAlignment(rightContainer, Pos.CENTER_RIGHT);
-        BorderPane.setMargin(rightContainer, new Insets(10));
+        BorderPane.setMargin(rightContainer, new Insets(10));*/
     }
 
     private AnchorPane loadVueJoueurCourant() {
@@ -170,6 +170,7 @@ public class VueDuJeu extends BorderPane {
     private void updateJoueursVBox() {
         joueursVBox.getChildren().clear();
         for (IJoueur joueur : jeu.getJoueurs()) {
+            if(joueur== vueJoueurCourant.getJoueurCourant()) continue;
             Label nomJoueurLabel = new Label(joueur.getNom());
             String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
             nomJoueurLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
@@ -282,7 +283,6 @@ public class VueDuJeu extends BorderPane {
         }
     }
 
-    //fix what the buttons do when pressed
     private Button createCarteButton(Carte c) {
         Button carte = new Button();
 
@@ -345,19 +345,14 @@ public class VueDuJeu extends BorderPane {
 
 
     private void initializeCardImages() {
-        String imageFileName;
-        String path;
-        InputStream imageStream;
         for (Carte c : jeu.getReserve()) {
             createImage(c);
         }
         Carte omni = new TrainOmnibus();
         createImage(omni);
-
     }
 
     private void createImage(Carte c) {
-        //Image image = null;
         String imageFileName = convertCardNameToImageFileName(c.getNom());
         String path = "/images/cartes/" + imageFileName;
         InputStream imageStream = getClass().getResourceAsStream(path);
