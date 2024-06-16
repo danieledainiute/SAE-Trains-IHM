@@ -1,20 +1,10 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
-import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
-import fr.umontpellier.iut.trainsJavaFX.mecanique.Joueur;
-import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Cette classe présente les éléments des joueurs autres que le joueur courant,
@@ -50,6 +40,5 @@ public class VueAutresJoueurs extends AnchorPane {
         nbDeffause.textProperty().bind(joueur.defausseProperty().sizeProperty().asString());
         String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
         mainVue.setStyle("-fx-background-color: " + couleurHex + ";");
-
     }
 }

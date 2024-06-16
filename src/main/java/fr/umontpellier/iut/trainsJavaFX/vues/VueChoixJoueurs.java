@@ -1,4 +1,5 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
+
 import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.Plateau;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -146,14 +147,6 @@ public class VueChoixJoueurs extends Stage {
 
     public void setNomsDesJoueursDefinisListener(ListChangeListener<String> quandLesNomsDesJoueursSontDefinis) {
         nomsJoueurs.addListener(quandLesNomsDesJoueursSontDefinis);
-    }
-
-    public int getNombreDeJoueurs() {
-        return nomsJoueurs.size();
-    }
-
-    public String getJoueurParNumero(int playerNumber) {
-        return nomsJoueurs.get(playerNumber - 1);
     }
 
     public Plateau getPlateau() {
