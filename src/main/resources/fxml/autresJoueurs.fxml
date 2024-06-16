@@ -22,7 +22,7 @@
                   <Image url="@../images/boutons/score.png" />
                </image>
             </ImageView>
-            <Label fx:id="nbRails" text="0" textFill="#e4c515">
+            <Label fx:id="nbScore" text="0" textFill="#e4c515">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
