@@ -58,7 +58,7 @@ public class VueChoixJoueurs extends Stage {
         comboBoxPlateau = new ComboBox<>();
         comboBoxPlateau.getItems().addAll("OSAKA", "TOKYO");
         comboBoxPlateau.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px;");
-        comboBoxPlateau.setPromptText("Choisissez un plateau");
+        comboBoxPlateau.setPromptText("Plateau");
         comboBoxPlateau.setBorder(new Border(new BorderStroke(Color.DARKRED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
         comboBoxPlateau.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             plateauChoisi = Plateau.valueOf(newValue);
