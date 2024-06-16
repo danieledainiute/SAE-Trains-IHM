@@ -56,10 +56,10 @@ public class CartesEnReserve extends HBox {
 
     private void handleCarteButtonAction(Carte carte, IntegerProperty nbCarteReserve, Button carteButton) {
         IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-        nbCarteReserve.bind(jeu.joueurCourantProperty().getValue().cartesRecuesProperty().sizeProperty());
         int money = joueurCourant.argentProperty().getValue();
         jeu.uneCarteDeLaReserveEstAchetee(carte.getNom());
         if (money >= carte.getCout() && nbCarteReserve.get() > 0) {
+            nbCarteReserve.set(nbCarteReserve.get() - 1);
             cartesRecues.getChildren().add(createCarteButton(carte, nbCarteReserve));
         }
         if (nbCarteReserve.get() == 0) {
