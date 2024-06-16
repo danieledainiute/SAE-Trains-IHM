@@ -1,9 +1,7 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
-import fr.umontpellier.iut.trainsJavaFX.GestionJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
-import fr.umontpellier.iut.trainsJavaFX.TrainsIHM;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.ListeDeCartes;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.TrainOmnibus;
@@ -11,9 +9,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,13 +25,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -59,7 +52,6 @@ public class VueDuJeu extends BorderPane {
     private VBox joueursVBox;
     private VueJoueurCourant vueJoueurCourant;
     private HBox carteRecues;
-    //private VueResultats vueResultats;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -76,6 +68,15 @@ public class VueDuJeu extends BorderPane {
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
+            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+            for (Node node : carteRecues.getChildren()) {
+                if (node instanceof Button) {
+                    Button carteButton = (Button) node;
+                    Carte carte = (Carte) carteButton.getUserData();
+                    joueurCourant.defausseProperty().add(carte);
+                }
+            }
+            carteRecues.getChildren().clear();
         });
 
         cartesEnMain = new HBox();
@@ -114,7 +115,6 @@ public class VueDuJeu extends BorderPane {
         //center
         StackPane centerPane = new StackPane(plateau);
         centerPane.setAlignment(Pos.CENTER);
-
         plateau.prefWidthProperty().bind(centerPane.widthProperty().multiply(0.5));
 
         //right side
@@ -145,24 +145,7 @@ public class VueDuJeu extends BorderPane {
         setBottom(bottom);
         setTop(top);
         setRight(right);
-
-
-        /*jeu.finDePartieProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                showVueResultats();
-            }
-        });*/
     }
-    /*private void showVueResultats() {
-        if (vueResultats == null) {
-            vueResultats = new VueResultats((TrainsIHM) jeu);
-        }
-
-        Stage stage = (Stage) this.getScene().getWindow();
-        Scene scene = new Scene(vueResultats);
-        stage.setScene(scene);
-        stage.show();
-    }*/
 
     private AnchorPane loadVueJoueurCourant() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/joueurCourant.fxml"));
@@ -260,7 +243,6 @@ public class VueDuJeu extends BorderPane {
         carte.setOnAction(event -> {
             if (jeu.joueurCourantProperty().get().nbJetonsRailsProperty().getValue() < 20) {
                 jeu.joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom());
-                //jeu.joueurCourantProperty().get().uneCarteEnJeuAEteChoisie(c.getNom());
                 cartesEnMain.getChildren().remove(carte);
             }
         });
@@ -274,10 +256,11 @@ public class VueDuJeu extends BorderPane {
         createButton(c, carte);
 
         carte.setOnAction(event -> {
-            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
             IJoueur joueurCourant = jeu.joueurCourantProperty().get();
             IntegerProperty argent = joueurCourant.argentProperty();
+
             if (argent.getValue() >= c.getCout()) {
+                jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
                 int currentNbCarte = nbCarteReserve.get();
 
                 if (currentNbCarte > 0) {
@@ -289,6 +272,7 @@ public class VueDuJeu extends BorderPane {
 
                 if (currentNbCarte == 0) {
                     Node parent = carte.getParent();
+
                     if (parent instanceof StackPane) {
                         StackPane stackPane = (StackPane) parent;
                         stackPane.getChildren().clear();
@@ -310,7 +294,7 @@ public class VueDuJeu extends BorderPane {
             imageView.setFitHeight(160);
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
-        carte.setStyle("-fx-background-color: transparent; -fx-padding: 6;");
+        carte.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
 
         carte.setOnMouseEntered(event -> {
             carte.setScaleX(1.1);
@@ -321,9 +305,8 @@ public class VueDuJeu extends BorderPane {
             carte.setScaleX(1.0);
             carte.setScaleY(1.0);
         });
-
-
     }
+
 
     private void initializeCardImages() {
         for (Carte c : jeu.getReserve()) {
@@ -351,14 +334,11 @@ public class VueDuJeu extends BorderPane {
 
     private void createCartesEnReserve() {
         for (Carte c : jeu.getReserve()) {
-            IntegerProperty nbCarteReserve = GestionJeu.getJeu().getTaillesPilesReserveProperties().get(c.getNom());
+            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(10);
             Button carteButton = createCarteButtonFromReserve(c, nbCarteReserve);
 
             Label nbCarte = new Label();
             nbCarte.textProperty().bind(nbCarteReserve.asString());
-            nbCarte.setFont(Font.font("Calibri", FontWeight.EXTRA_BOLD, 14));
-            nbCarte.setStyle("-fx-text-fill: darkblue;");
-
 
             StackPane carte = new StackPane(carteButton, nbCarte);
             StackPane.setAlignment(nbCarte, Pos.BOTTOM_CENTER);
