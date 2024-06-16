@@ -68,15 +68,14 @@ public class VueDuJeu extends BorderPane {
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
-            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
-            for (Node node : carteRecues.getChildren()) {
-                if (node instanceof Button) {
-                    Button carteButton = (Button) node;
-                    Carte carte = (Carte) carteButton.getUserData();
-                    //joueurCourant.argentProperty().set(joueurCourant.argentProperty().add(carte.getNbPointsVictoire()).getValue());
-                    joueurCourant.defausseProperty().add(carte);
-                }
-            }
+//            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+//            for (Node node : carteRecues.getChildren()) {
+//                if (node instanceof Button) {
+//                    Button carteButton = (Button) node;
+//                    Carte carte = (Carte) carteButton.getUserData();
+//                    joueurCourant.defausseProperty().add(carte);
+//                }
+//            }
             carteRecues.getChildren().clear();
         });
 
@@ -101,7 +100,7 @@ public class VueDuJeu extends BorderPane {
         hboxBottom.setStyle("-fx-background-color: lightblue;");
 
         HBox bottomContent = new HBox();
-        bottomContent.getChildren().addAll(leftColumn, rightColumn);
+        bottomContent.getChildren().addAll(leftColumn, rightColumn, carteRecues);
         HBox.setHgrow(leftColumn, Priority.ALWAYS);
         HBox.setHgrow(bottomRight, Priority.ALWAYS);
         bottomContent.setAlignment(Pos.CENTER);
