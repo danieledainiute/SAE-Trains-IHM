@@ -256,11 +256,11 @@ public class VueDuJeu extends BorderPane {
         createButton(c, carte);
 
         carte.setOnAction(event -> {
+            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
             IJoueur joueurCourant = jeu.joueurCourantProperty().get();
             IntegerProperty argent = joueurCourant.argentProperty();
 
             if (argent.getValue() >= c.getCout()) {
-                jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
                 int currentNbCarte = nbCarteReserve.get();
 
                 if (currentNbCarte > 0) {
@@ -294,7 +294,7 @@ public class VueDuJeu extends BorderPane {
             imageView.setFitHeight(160);
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
-        carte.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
+        carte.setStyle("-fx-background-color: transparent; -fx-padding: 6;");
 
         carte.setOnMouseEntered(event -> {
             carte.setScaleX(1.1);
@@ -305,8 +305,9 @@ public class VueDuJeu extends BorderPane {
             carte.setScaleX(1.0);
             carte.setScaleY(1.0);
         });
-    }
 
+
+    }
 
     private void initializeCardImages() {
         for (Carte c : jeu.getReserve()) {
