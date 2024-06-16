@@ -92,6 +92,7 @@ public class VueDuJeu extends BorderPane {
         score = new Label("0");
         argent = new Label("0");
 
+        //bottom
         AnchorPane rightColumn = loadVueJoueurCourant();
         HBox bottomRight = new HBox();
         bottomRight.getChildren().addAll(rightColumn, carteRecues);
@@ -113,14 +114,17 @@ public class VueDuJeu extends BorderPane {
         VBox bottom = new VBox();
         bottom.getChildren().addAll(hboxBottom, bottomContent);
 
+        //top
         ScrollPane top = new ScrollPane(cartesEnReserve);
         top.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
+        //center
         StackPane centerPane = new StackPane(plateau);
         centerPane.setAlignment(Pos.CENTER);
 
         plateau.prefWidthProperty().bind(centerPane.widthProperty().multiply(0.5));
 
+        //right side
         joueursVBox = new VBox();
         joueursVBox.setSpacing(10);
         updateJoueursVBox();
@@ -138,20 +142,15 @@ public class VueDuJeu extends BorderPane {
 
         VBox right = new VBox();
         right.setAlignment(Pos.CENTER);
-        //right.setPadding(new Insets(100));
         right.setSpacing(15);
         right.getChildren().addAll(joueursContainer, passer);
 
+        //setting everything up on the borderpane
         setTop(top);
         setCenter(centerPane);
         setBottom(bottom);
         setTop(top);
         setRight(right);
-
-        /*BorderPane.setMargin(bottom, new Insets(10, 0, 10, 0));
-
-        BorderPane.setAlignment(rightContainer, Pos.CENTER_RIGHT);
-        BorderPane.setMargin(rightContainer, new Insets(10));*/
     }
 
     private AnchorPane loadVueJoueurCourant() {
@@ -363,7 +362,9 @@ public class VueDuJeu extends BorderPane {
     }
 
     private String convertCardNameToImageFileName(String card) {
-        return card.toLowerCase().replace(" ", "_") + ".jpg";
+        return card.toLowerCase().replace(" ", "_")
+                .replace("é", "e")
+                .replace("ô", "o") + ".jpg";
     }
 
     private void createCartesEnReserve() {
