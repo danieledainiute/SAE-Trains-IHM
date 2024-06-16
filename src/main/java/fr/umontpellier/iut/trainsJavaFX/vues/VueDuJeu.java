@@ -64,7 +64,18 @@ public class VueDuJeu extends BorderPane {
         instruction = new Label();
         instruction.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
         passer = new Button("Passer");
-        passer.setOnMouseClicked(event -> jeu.passerAEteChoisi());
+        passer.setOnMouseClicked(event -> {
+            jeu.passerAEteChoisi();
+            IJoueur joueurCourant = jeu.joueurCourantProperty().get();
+            for (Node node : carteRecues.getChildren()) {
+                if (node instanceof Button) {
+                    Button carteButton = (Button) node;
+                    Carte carte = (Carte) carteButton.getUserData();
+                    joueurCourant.defausseProperty().add(carte);
+                }
+            }
+            carteRecues.getChildren().clear();
+        });
         cartesEnMain = new HBox();
         carteRecues = new HBox();
         cartesImages = new HashMap<>();
@@ -72,7 +83,6 @@ public class VueDuJeu extends BorderPane {
         argent = new Label("0");
         cartesEnReserve = new HBox();
         initializeCardImages();
-
         createCartesEnReserve();
         VBox bottom = new VBox();
         HBox bottomContent = new HBox();
