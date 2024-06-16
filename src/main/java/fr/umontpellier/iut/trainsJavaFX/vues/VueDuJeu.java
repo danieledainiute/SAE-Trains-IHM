@@ -258,11 +258,10 @@ public class VueDuJeu extends BorderPane {
         createButton(c, carte);
 
         carte.setOnAction(event -> {
+            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
             IJoueur joueurCourant = jeu.joueurCourantProperty().get();
             IntegerProperty argent = joueurCourant.argentProperty();
-
             if (argent.getValue() >= c.getCout()) {
-                jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
                 int currentNbCarte = nbCarteReserve.get();
 
                 if (currentNbCarte > 0) {
@@ -272,9 +271,8 @@ public class VueDuJeu extends BorderPane {
                     carteRecues.getChildren().add(carteToAdd);
                 }
 
-                if (currentNbCarte == 1) {
+                if (currentNbCarte == 0) {
                     Node parent = carte.getParent();
-
                     if (parent instanceof StackPane) {
                         StackPane stackPane = (StackPane) parent;
                         stackPane.getChildren().clear();
