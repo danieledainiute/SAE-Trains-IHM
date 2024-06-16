@@ -30,6 +30,8 @@ public class VueAutresJoueurs extends AnchorPane {
     @FXML
     private Label nbDeffause;
     private IJoueur joueur;
+    @FXML
+    private AnchorPane mainVue;
 
     @FXML
     public void initialize() {
@@ -42,6 +44,8 @@ public class VueAutresJoueurs extends AnchorPane {
         nbRails.textProperty().bind(joueur.nbJetonsRailsProperty().asString());
         nbDeck.textProperty().bind(joueur.mainProperty().sizeProperty().asString());
         nbDeffause.textProperty().bind(joueur.defausseProperty().sizeProperty().asString());
+        String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
+        mainVue.setStyle("-fx-background-color: " + couleurHex + ";");
 
     }
 }

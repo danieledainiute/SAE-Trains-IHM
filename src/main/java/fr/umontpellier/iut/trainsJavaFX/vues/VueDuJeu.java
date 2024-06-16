@@ -170,10 +170,6 @@ public class VueDuJeu extends BorderPane {
                     AnchorPane autresJoueursPane = loader.load();
                     VueAutresJoueurs vueAutresJoueurs = loader.getController();
                     vueAutresJoueurs.setJoueur(joueur);
-
-                    String couleurHex = CouleursJoueurs.couleursBackgroundJoueur.get(joueur.getCouleur());
-                    System.out.println(couleurHex);
-                    vueAutresJoueurs.setStyle("-fx-background-color: " + couleurHex + ";");
                     joueursVBox.getChildren().add(autresJoueursPane);
                 } catch (IOException e) {
                     e.printStackTrace();
