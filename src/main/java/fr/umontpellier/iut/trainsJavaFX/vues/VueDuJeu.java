@@ -64,13 +64,13 @@ public class VueDuJeu extends BorderPane {
         plateau = new VuePlateau();
         instruction = new Label();
         instruction.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
+
         passer = new Button();
         ImageView passerImage = new ImageView(new Image("/images/boutons/passer.png"));
         passerImage.setFitHeight(60);
         passerImage.setFitWidth(60);
         passer.setGraphic(passerImage);
         passer.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
-
         passer.setOnMouseClicked(event -> {
             jeu.passerAEteChoisi();
             IJoueur joueurCourant = jeu.joueurCourantProperty().get();
@@ -102,18 +102,18 @@ public class VueDuJeu extends BorderPane {
         VBox leftColumn = new VBox();
         leftColumn.getChildren().addAll(cartesEnMain);
 
-        VBox bottom = new VBox();
-        HBox bottomContent = new HBox();
         HBox hboxBottom = new HBox();
-
         hboxBottom.getChildren().addAll(instruction);
         hboxBottom.setAlignment(Pos.CENTER);
         hboxBottom.setStyle("-fx-background-color: lightblue;");
 
+        HBox bottomContent = new HBox();
         bottomContent.getChildren().addAll(leftColumn, rightColumn);
         HBox.setHgrow(leftColumn, Priority.ALWAYS);
         HBox.setHgrow(bottomRight, Priority.ALWAYS);
         bottomContent.setAlignment(Pos.CENTER);
+
+        VBox bottom = new VBox();
         bottom.getChildren().addAll(hboxBottom, bottomContent);
 
         VBox right = new VBox();
@@ -340,6 +340,7 @@ public class VueDuJeu extends BorderPane {
             imageView.setFitHeight(160);
             carte.setGraphic(imageView);
         } else carte.setText(c.getNom());
+        carte.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
     }
 
 
