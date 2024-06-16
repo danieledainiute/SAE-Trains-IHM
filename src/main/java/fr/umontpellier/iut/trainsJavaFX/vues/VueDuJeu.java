@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
+import fr.umontpellier.iut.trainsJavaFX.GestionJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
@@ -256,11 +257,11 @@ public class VueDuJeu extends BorderPane {
         createButton(c, carte);
 
         carte.setOnAction(event -> {
-            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
             IJoueur joueurCourant = jeu.joueurCourantProperty().get();
             IntegerProperty argent = joueurCourant.argentProperty();
-
-            if (argent.getValue() >= c.getCout()) {
+            int money = argent.getValue();
+            jeu.uneCarteDeLaReserveEstAchetee(c.getNom());
+            if (money >= c.getCout()) {
                 int currentNbCarte = nbCarteReserve.get();
 
                 if (currentNbCarte > 0) {
@@ -305,9 +306,8 @@ public class VueDuJeu extends BorderPane {
             carte.setScaleX(1.0);
             carte.setScaleY(1.0);
         });
-
-
     }
+
 
     private void initializeCardImages() {
         for (Carte c : jeu.getReserve()) {
@@ -335,11 +335,12 @@ public class VueDuJeu extends BorderPane {
 
     private void createCartesEnReserve() {
         for (Carte c : jeu.getReserve()) {
-            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(10);
+            IntegerProperty nbCarteReserve = new SimpleIntegerProperty(GestionJeu.getJeu().getTaillesPilesReserveProperties().get(c.getNom()).getValue());
             Button carteButton = createCarteButtonFromReserve(c, nbCarteReserve);
-
             Label nbCarte = new Label();
             nbCarte.textProperty().bind(nbCarteReserve.asString());
+            nbCarte.setFont(Font.font("Calibri", FontWeight.EXTRA_BOLD, 14));
+            nbCarte.setStyle("-fx-text-fill: darkblue;");
 
             StackPane carte = new StackPane(carteButton, nbCarte);
             StackPane.setAlignment(nbCarte, Pos.BOTTOM_CENTER);

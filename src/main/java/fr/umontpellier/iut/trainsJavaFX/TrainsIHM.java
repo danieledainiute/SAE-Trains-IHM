@@ -25,7 +25,7 @@ public class TrainsIHM extends Application {
     private Stage primaryStage;
     private Jeu jeu;
 
-    private final boolean avecVueChoixJoueurs = true;
+    private final boolean avecVueChoixJoueurs = false;
 
     @Override
     public void start(Stage primaryStage) {
